@@ -4,7 +4,9 @@
   "description": "Automatic generation of listicles from AskReddit threads",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js"
+    "start": "node index.js",
+    "build": "next build",
+    "prod": "NODE_ENV=production node index.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +19,9 @@
   },
   "homepage": "https://github.com/KhoomeiK/yowza#readme",
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "next": "^8.0.3",
+    "react": "^16.8.5",
+    "react-dom": "^16.8.5"
   }
 }
