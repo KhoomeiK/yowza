@@ -1,0 +1,22 @@
+{
+  "name": "yowza",
+  "version": "1.0.0",
+  "description": "Automatic generation of listicles from AskReddit threads",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KhoomeiK/yowza.git"
+  },
+  "author": "Rohan Pandey & Miguel T",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KhoomeiK/yowza/issues"
+  },
+  "homepage": "https://github.com/KhoomeiK/yowza#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
