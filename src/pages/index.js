@@ -65,7 +65,7 @@ export default class Index extends Component {
 
     // TODO: Pass Object.keys(posts) (to pass currently loaded posts)
     // Load data from the API
-    const { data } = await axios.post('http://35.247.79.142/api', { 'used': [this.state.posts.map(post => post.id)] });
+    const { data } = await axios.post('http://35.247.79.142/api', { 'used': this.state.posts.map(post => post.id) });
     console.log(data);
     const newPosts = { id: data[0], title: data[1], content: data[2] }
 
