@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import InfiniteScroll from 'react-infinite-scroller';
 import axios from 'axios';
 
 import Page from '../layouts/main';
@@ -30,22 +29,21 @@ export default class Index extends Component {
     super(props);
     this.state = {
       hasMore: false,
-      posts: [
-        {
-          id: '',
-          title: '',
-          content: ''
-        }
-      ]
+      used: [],
+      posts: [],
+      loading: false
     };
 
-    window.onscroll = () => {
+    window.onscroll = async() => {
       if (
         window.innerHeight + document.documentElement.scrollTop
-        >= document.documentElement.offsetHeight - 150
+        >= document.documentElement.offsetHeight - 150 &&
+        !this.state.loading
       ) {
-        console.log('load')
-        this.loadMoreData()
+        console.log([this.state.posts.map(post => post.id)]);
+        this.setState({loading: true});
+        await this.loadMoreData();
+        this.setState({loading: false});
       }
     }
 
@@ -76,7 +74,7 @@ export default class Index extends Component {
       posts: previousState.posts.concat(newPosts),
       // Update whether or not it has more posts
       hasMore: newPosts.length === 0
-    }), () => { console.log(this.state); });
+    }), () => { /*console.log(this.state);*/ });
   }
 
   render() {
