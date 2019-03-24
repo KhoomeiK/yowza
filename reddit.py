@@ -13,10 +13,11 @@ r = praw.Reddit(username="WebsterBot",
                 client_secret="o_jPN2Mou9UbAJzN5I3zybCaKjo",
                 user_agent="actualsnek wtwbot test 0.0")  # , conn
 
-for p in r.subreddit("AskReddit").top(time_filter='week'):
+for p in r.subreddit("AskReddit").top(time_filter='day'):
     if p.score > 1000:
         tc = []  # top comments
         for c in p.comments:
             if type(c) == praw.models.reddit.comment.Comment and c.score > p.score/40:
                 tc.append(c.body)
-        posts.insert_one({p.id: [p.title, tc]})
+        # posts.insert_one({"data": [p.id, p.title, tc]})
+        print({"data": [p.id, p.title, tc]})

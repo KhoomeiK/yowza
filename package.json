@@ -20,6 +20,7 @@
   "homepage": "https://github.com/KhoomeiK/yowza#readme",
   "dependencies": {
     "express": "^4.16.4",
+    "mongodb": "^3.2.2",
     "next": "^8.0.3",
     "react": "^16.8.5",
     "react-dom": "^16.8.5"
