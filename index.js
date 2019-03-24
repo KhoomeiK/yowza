@@ -15,7 +15,6 @@ server.use(bodyParser.json());
 if (production) {
   server.use(express.static('build'))
 
-
   // MongoDB/API
   const mongo = require('mongodb').MongoClient;
   server.post('/api', (req, res) => {
@@ -44,9 +43,19 @@ if (production) {
     });
   });
 
+  server.get('/api/:id', (req, res) => {
+    mongo.connect('mongodb://localhost:27017/', async (err, db) => {
+      if (err) throw err;
+
+      let dbo = db.db('test');
+      let post = await dbo.collection('posts').findOne({ "data": { $all: [req.params.id] } });
+      
+      res.send(post);
+    });
+  });
+
   // Main page (if an ID is provided, it will be the first rendered post)
   server.get('/:id?', (req, res) => {
-    console.log("send file react")
     return res.sendFile(path.join(__dirname, 'build', 'index.html'));
   });
 
@@ -58,7 +67,6 @@ if (production) {
 } else {
   // Not production, localhost
   server.listen(port, err => {
-    console.log("send file react dev server?")
     if (err) throw err;
     if (production) console.log(`> Ready on http://localhost:${port}`);
   });

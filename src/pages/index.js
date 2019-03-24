@@ -50,11 +50,21 @@ export default class Index extends Component {
   }
 
   async componentWillMount() {
-    await this.loadMoreData();
+    const id = 'b4jn8z';
+    await this.loadMoreData(id);
   }
 
   // This loads data from the API and sets it to the state (using this.loadData)
-  async loadMoreData() {
+  async loadMoreData(id) {
+    let newPosts;
+    if (id) {
+      const { data } = await axios.get('http://35.247.79.142/api/' + id);
+      newPosts = { id: data[0], title: data[1], content: data[2] }
+    } else {
+      const { data } = await axios.post('http://35.247.79.142/api', { 'used': this.state.posts.map(post => post.id) });
+      newPosts = { id: data[0], title: data[1], content: data[2] }
+    }
+
     /**
      * 1. Fetch data from API
      * 2. Set State with new posts list (merge/push them to the current posts list)
@@ -64,9 +74,6 @@ export default class Index extends Component {
 
     // TODO: Pass Object.keys(posts) (to pass currently loaded posts)
     // Load data from the API
-    const { data } = await axios.post('http://35.247.79.142/api', { 'used': this.state.posts.map(post => post.id) });
-    const newPosts = { id: data[0], title: data[1], content: data[2] }
-
     this.setState(previousState => ({
       // Merge current and new posts
       posts: previousState.posts.concat(newPosts),
