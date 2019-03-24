@@ -47,4 +47,4 @@ app.prepare().then(() => {
   });
 });
 
-// curl -d '{"used": ["b4kww0", "b4iash"]}' -H "Content-Type: application/json" -X POST http://localhost:3000/api
+// let x = await axios.post('http://35.247.79.142/api', { "used": ["b4kww0", "b4iash"] });

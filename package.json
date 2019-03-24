@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/KhoomeiK/yowza#readme",
   "dependencies": {
+    "axios": "^0.18.0",
     "express": "^4.16.4",
     "mongodb": "^3.2.2",
     "next": "^8.0.3",
