@@ -47,13 +47,13 @@ if (production) {
   // Production, custom IP
   server.listen(port, '0.0.0.0', err => {
     if (err) throw err;
-    console.log(`> Ready on http://35.247.79.142/:${port}`);
+    console.log(`> Ready on http://35.247.79.142:${port}`);
   });
 } else {
   // Not production, localhost
   server.listen(port, err => {
     if (err) throw err;
-    if (production) console.log(`> Ready on http://localhost/:${port}`);
+    if (production) console.log(`> Ready on http://localhost:${port}`);
   });
 }
 
