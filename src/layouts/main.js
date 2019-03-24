@@ -1,4 +1,5 @@
-import Head from '../components/head';
+import React from 'react';
+
 import Navbar from '../components/navbar';
 
 const contentStyle = {
@@ -9,7 +10,6 @@ const contentStyle = {
 export default function MainLayout ({ children }) {
   return (
     <div>
-      <Head />
       <Navbar />
       <div style={contentStyle}>
         { children }

@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import React from 'react';
 
 const navStyle = {
   borderBottom: '1px solid #e1e4e8',
@@ -19,9 +19,9 @@ const titleStyle = {
 export default function Navbar () {
   return (
     <nav style={navStyle}>
-      <Link href='/'>
+      <a href='/'>
         <h1 style={titleStyle}>Yowza!</h1>
-      </Link>
+      </a>
     </nav>
   );
 }

@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { withRouter } from 'next/router';
-// import fetch from 'unfetch';
 import InfiniteScroll from 'react-infinite-scroller';
 
 import Page from '../layouts/main';
@@ -25,12 +23,25 @@ import Error from '../components/error';
  * 4. Repeat on Scroll
  */
 
-class Index extends Component {
-  componentWillMount () {
-    this.setState({
+export default class Index extends Component {
+  constructor (props) {
+    super(props);
+    this.state = {
       hasMore: false,
-      posts: {}
-    });
+      posts: [
+        {
+          id: '0',
+          title: 'Title 000',
+          content: 'OO'
+        }
+      ]
+    };
+
+    this.loadMoreData = this.loadMoreData.bind(this);
+  }
+
+  async componentWillMount () {
+    await this.loadMoreData();
   }
 
   // This loads data from the API and sets it to the state (using this.loadData)
@@ -44,53 +55,37 @@ class Index extends Component {
 
     // TODO: Pass Object.keys(posts) (to pass currently loaded posts)
     // Load data from the API
-    // const res = await fetch('API_HERE');
+    const res = await window.fetch('http://localhost:8080/api');
     // console.log(res.text());
-    // const data = await res.json();
-    const data = {
-      'id2': {
-        title: 'Title 2',
-        content: 'Content 2'
-      }
-    };
+    const data = await res.json();
+
+    const newPosts = data ? Object.entries(data).map((pair) => ({ id: pair[0], ...pair[1] })) : [];
 
     this.setState((previousState) => ({
       // Merge current and new posts
-      posts: Object.assign(previousState, data),
+      posts: previousState.posts.concat(newPosts),
       // Update whether or not it has more posts
-      hasMore: Object.values(data).length === 0
-    }));
-  }
-
-  // Returns every currently loaded posts
-  getLoadedPosts () {
-    let data = {};
-    if (this.props && this.props.router && this.props.router.query.posts) {
-      data = Object.assign(data, this.props.router.query.posts || {});
-    }
-    if (this.state && this.state.posts) {
-      data = Object.assign(data, this.state.posts || {});
-    }
-    return data;
+      hasMore: newPosts.length === 0
+    }), () => { console.log(this.state); });
   }
 
   render () {
     // Merge props and state to render it
-    const data = this.getLoadedPosts();
+    const data = this.state.posts;
     return (
       <Page>
         {
-          data && Object.entries(data).length > 0
+          data && data.length > 0
             ? (<div id='posts'>
               <InfiniteScroll
                 initialLoad={false}
                 loadMore={this.loadMoreData}
-                hasMore={this.state ? this.state.hasMore : true}
+                hasMore={this.state.hasMore}
                 loader={<div className='loader' key={0}>Loading...</div>}
               >
                 {
-                  Object.entries(data).map((post) => (
-                    <Post title={post[1].title} content={post[1].content} key={post[0]} />
+                  data.map((post) => (
+                    <Post title={post.title} content={post.content} key={post.id} />
                   ))
                 }
               </InfiniteScroll>
@@ -101,5 +96,3 @@ class Index extends Component {
     );
   }
 }
-
-export default withRouter(Index);
