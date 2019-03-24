@@ -28,7 +28,7 @@ export default class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      hasMore: false,
+      hasMore: true,
       used: [],
       posts: [],
       loading: false
@@ -40,7 +40,6 @@ export default class Index extends Component {
         >= document.documentElement.offsetHeight - 150 &&
         !this.state.loading
       ) {
-        console.log([this.state.posts.map(post => post.id)]);
         this.setState({ loading: true });
         await this.loadMoreData();
         this.setState({ loading: false });
@@ -66,14 +65,17 @@ export default class Index extends Component {
     // TODO: Pass Object.keys(posts) (to pass currently loaded posts)
     // Load data from the API
     const { data } = await axios.post('http://35.247.79.142/api', { 'used': this.state.posts.map(post => post.id) });
-    console.log(data);
+    if (data == null) {
+      this.setState({ hasMore: false });
+      return;
+    }
     const newPosts = { id: data[0], title: data[1], content: data[2] }
 
     this.setState((previousState) => ({
       // Merge current and new posts
       posts: previousState.posts.concat(newPosts),
       // Update whether or not it has more posts
-      hasMore: newPosts.length === 0
+      hasMore: newPosts.length !== 0
     }), () => { /*console.log(this.state);*/ });
   }
 
