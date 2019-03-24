@@ -2,14 +2,11 @@
 
 Automatic generation of listicles from AskReddit threads
 
-## Backend
+## Development
 
-- Node.js
-- Express
-- CouchDB
-- Reddit API
+Run `npm start`.
 
-## Frontend
+## Production
 
-- Next.js
-- WebComponents
+First run `npm run build` to build the website.  
+Then run `npm run prod` to deploy in production.
