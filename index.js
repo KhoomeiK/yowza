@@ -3,7 +3,7 @@ const next = require('next');
 const mongo = require('mongodb').MongoClient;
 const bodyParser = require('body-parser');
 
-const port = parseInt(process.env.PORT, 10) || 3000;
+const port = parseInt(process.env.PORT, 10) || 80;
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({
   dev
@@ -41,9 +41,9 @@ app.prepare().then(() => {
   });
 
 
-  server.listen(port, err => {
+  server.listen(port, '0.0.0.0', err => {
     if (err) throw err;
-    console.log(`> Ready on http://localhost:${port}`);
+    console.log(`> Ready on http://35.247.79.142/:${port}`);
   });
 });
 
