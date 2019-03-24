@@ -34,8 +34,8 @@ if (production) {
           }
         }]).next();
 
-        console.log(arr)
-        console.log(post.data[0])
+        console.log(typeof arr)
+        console.log(typeof post.data[0])
         console.log(arr.indexOf(post.data[0]))
       } while (arr.indexOf(post.data[0]) !== -1); // while post id isnt in array
       // need to account for if all posts are read
