@@ -45,6 +45,7 @@ if (production) {
 
   // Main page (if an ID is provided, it will be the first rendered post)
   server.get('/:id?', (req, res) => {
+    console.log("send file react")
     return res.sendFile(path.join(__dirname, 'build', 'index.html'));
   });
 
@@ -56,10 +57,10 @@ if (production) {
 } else {
   // Not production, localhost
   server.listen(port, err => {
+    console.log("send file react dev server?")
     if (err) throw err;
     if (production) console.log(`> Ready on http://localhost:${port}`);
   });
 }
 
-// let x = await axios.post('http://35.247.79.142/api', { "used": ["b4kww0", "b4iash"] });
 // curl -d '{ "used": ["b4kww0", "b4iash"] }' -H "Content-Type: application/json" -X POST http://35.247.79.142/api
