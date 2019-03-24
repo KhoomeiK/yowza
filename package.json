@@ -4,7 +4,6 @@
   "description": "Automatic generation of listicles from AskReddit threads",
   "main": "index.js",
   "scripts": {
-    "_comment": "Start is for production, it requires to project to be built using npm:build",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
     "start-react": "react-scripts start",
@@ -12,7 +11,6 @@
     "start": "concurrently npm:start-react npm:start-express",
     "prod": "NODE_ENV=production node index.js"
   },
-  "proxy": "http://localhost:8080",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/KhoomeiK/yowza.git"
@@ -24,6 +22,7 @@
   },
   "homepage": "https://github.com/KhoomeiK/yowza#readme",
   "dependencies": {
+    "axios": "^0.18.0",
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "mongodb": "^3.2.2",

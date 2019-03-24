@@ -3,7 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
 
-const port = parseInt(process.env.PORT, 10) || 8080;
+const port = parseInt(process.env.PORT, 10) || 80;
 const production = process.env.NODE_ENV === 'production';
 
 const server = express();
@@ -11,33 +11,33 @@ const server = express();
 server.use(cors());
 server.use(bodyParser.json());
 
-// MongoDB/API
-const mongo = require('mongodb').MongoClient;
-server.post('/api', (req, res) => {
-  const arr = req.body.used;
-
-  mongo.connect('mongodb://localhost:27017/', async (err, db) => {
-    if (err) throw err;
-
-    let dbo = db.db('test');
-    let post;
-
-    do {
-      post = await dbo.collection('posts').aggregate([{
-        $sample: {
-          size: 1
-        }
-      }]).next();
-    } while (arr.indexOf(post.data[0]) !== -1); // while post id isnt in array
-    // need to account for if all posts are read
-    res.send(post.data);
-    db.close();
-  });
-});
-
 // Host built files if production mode
 if (production) {
   server.use(express.static(path.join(__dirname, 'build')));
+
+  // MongoDB/API
+  const mongo = require('mongodb').MongoClient;
+  server.post('/api', (req, res) => {
+    const arr = req.body.used;
+
+    mongo.connect('mongodb://localhost:27017/', async (err, db) => {
+      if (err) throw err;
+
+      let dbo = db.db('test');
+      let post;
+
+      do {
+        post = await dbo.collection('posts').aggregate([{
+          $sample: {
+            size: 1
+          }
+        }]).next();
+      } while (arr.indexOf(post.data[0]) !== -1); // while post id isnt in array
+      // need to account for if all posts are read
+      res.send(post.data);
+      db.close();
+    });
+  });
 
   // Main page (if an ID is provided, it will be the first rendered post)
   server.get('/:id?', (req, res) => {
