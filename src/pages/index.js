@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
+import axios from 'axios';
 
 import Page from '../layouts/main';
 
@@ -55,10 +56,9 @@ export default class Index extends Component {
 
     // TODO: Pass Object.keys(posts) (to pass currently loaded posts)
     // Load data from the API
-    const res = await window.fetch('http://localhost:8080/api');
-    // console.log(res.text());
-    const data = await res.json();
+    const data = await axios.post('http://35.247.79.142/api', { 'used': [this.state.posts.map(post => post.id)] });
 
+    console.log(data);
     const newPosts = data ? Object.entries(data).map((pair) => ({ id: pair[0], ...pair[1] })) : [];
 
     this.setState((previousState) => ({
