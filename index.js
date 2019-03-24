@@ -13,7 +13,8 @@ server.use(bodyParser.json());
 
 // Host built files if production mode
 if (production) {
-  server.use(express.static(path.join(__dirname, 'build')));
+  server.use(express.static('build'))
+
 
   // MongoDB/API
   const mongo = require('mongodb').MongoClient;

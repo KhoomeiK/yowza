@@ -20,7 +20,7 @@
   "bugs": {
     "url": "https://github.com/KhoomeiK/yowza/issues"
   },
-  "homepage": "https://github.com/KhoomeiK/yowza#readme",
+  "homepage": "https://0.0.0.0",
   "dependencies": {
     "axios": "^0.18.0",
     "cors": "^2.8.5",
