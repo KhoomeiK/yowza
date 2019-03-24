@@ -25,7 +25,7 @@ import Error from '../components/error';
  */
 
 export default class Index extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
       hasMore: false,
@@ -41,12 +41,12 @@ export default class Index extends Component {
     this.loadMoreData = this.loadMoreData.bind(this);
   }
 
-  async componentWillMount () {
+  async componentWillMount() {
     await this.loadMoreData();
   }
 
   // This loads data from the API and sets it to the state (using this.loadData)
-  async loadMoreData () {
+  async loadMoreData() {
     /**
      * 1. Fetch data from API
      * 2. Set State with new posts list (merge/push them to the current posts list)
@@ -56,11 +56,11 @@ export default class Index extends Component {
 
     // TODO: Pass Object.keys(posts) (to pass currently loaded posts)
     // Load data from the API
-    const data = await axios.post('http://35.247.79.142/api', { 'used': [this.state.posts.map(post => post.id)] });
+    const { data } = await axios.post('http://35.247.79.142/api', { 'used': [this.state.posts.map(post => post.id)] });
 
     console.log(data);
-    const newPosts = data ? Object.entries(data).map((pair) => ({ id: pair[0], ...pair[1] })) : [];
-
+    // const newPosts = data ? Object.entries(data).map((pair) => ({ id: pair[0], ...pair[1] })) : [];
+    const newPosts = { id: data[0], title: data[1], content: data[2] }
     this.setState((previousState) => ({
       // Merge current and new posts
       posts: previousState.posts.concat(newPosts),
@@ -69,7 +69,7 @@ export default class Index extends Component {
     }), () => { console.log(this.state); });
   }
 
-  render () {
+  render() {
     // Merge props and state to render it
     const data = this.state.posts;
     return (

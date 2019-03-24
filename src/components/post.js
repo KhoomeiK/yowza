@@ -1,13 +1,21 @@
 import React from 'react';
 
-export default function Post (props) {
+function eachComment(content) {
+  let arr = []
+  for (let i of content) {
+    arr.push(<p>{i}</p>)
+  }
+  return arr;
+}
+
+export default function Post(props) {
   return (
     <div>
       <h1>
-        { props.title }
+        {props.title}
       </h1>
       <div>
-        { props.content }
+        {eachComment(props.content)}
       </div>
     </div>
   );

@@ -58,3 +58,4 @@ if (production) {
 }
 
 // let x = await axios.post('http://35.247.79.142/api', { "used": ["b4kww0", "b4iash"] });
+// curl -d '{ "used": ["b4kww0", "b4iash"] }' -H "Content-Type: application/json" -X POST http://35.247.79.142/api
