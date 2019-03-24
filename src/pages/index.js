@@ -34,16 +34,16 @@ export default class Index extends Component {
       loading: false
     };
 
-    window.onscroll = async() => {
+    window.onscroll = async () => {
       if (
         window.innerHeight + document.documentElement.scrollTop
         >= document.documentElement.offsetHeight - 150 &&
         !this.state.loading
       ) {
         console.log([this.state.posts.map(post => post.id)]);
-        this.setState({loading: true});
+        this.setState({ loading: true });
         await this.loadMoreData();
-        this.setState({loading: false});
+        this.setState({ loading: false });
       }
     }
 
