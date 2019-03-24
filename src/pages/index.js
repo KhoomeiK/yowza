@@ -65,18 +65,14 @@ export default class Index extends Component {
     // TODO: Pass Object.keys(posts) (to pass currently loaded posts)
     // Load data from the API
     const { data } = await axios.post('http://35.247.79.142/api', { 'used': this.state.posts.map(post => post.id) });
-    if (data == null) {
-      this.setState({ hasMore: false });
-      return;
-    }
     const newPosts = { id: data[0], title: data[1], content: data[2] }
 
-    this.setState((previousState) => ({
+    this.setState(previousState => ({
       // Merge current and new posts
       posts: previousState.posts.concat(newPosts),
       // Update whether or not it has more posts
       hasMore: newPosts.length !== 0
-    }), () => { /*console.log(this.state);*/ });
+    }));
   }
 
   render() {

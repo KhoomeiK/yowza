@@ -3,7 +3,11 @@ import React from 'react';
 function eachComment(content) {
   let arr = []
   for (let i of content) {
-    arr.push(<p>{i}</p>)
+    let s = i.split('.');
+    let f = s[0];
+    s.shift();
+    s = s.toString();
+    arr.push(<p><b>{f}</b>{s}</p>);
   }
   return arr;
 }

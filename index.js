@@ -34,7 +34,7 @@ if (production) {
         }]).next();
 
         if (arr.length == dbo.collection('posts').count())
-          return;
+          return; // dont send anything at end
 
       } while (arr.indexOf(post.data[0]) !== -1); // while post id isnt in array
       // need to account for if all posts are read
