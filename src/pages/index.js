@@ -7,6 +7,7 @@ import Page from '../layouts/main';
 import Post from '../components/post';
 import Error from '../components/error';
 
+
 /**
  * The way this works is:
  * - First load (Server Rendering) saves everything to props
@@ -37,6 +38,16 @@ export default class Index extends Component {
         }
       ]
     };
+
+    window.onscroll = () => {
+      if (
+        window.innerHeight + document.documentElement.scrollTop
+        >= document.documentElement.offsetHeight - 150
+      ) {
+        console.log('load')
+        this.loadMoreData()
+      }
+    }
 
     this.loadMoreData = this.loadMoreData.bind(this);
   }
@@ -76,18 +87,11 @@ export default class Index extends Component {
         {
           data && data.length > 0
             ? (<div id='posts'>
-              <InfiniteScroll
-                initialLoad={false}
-                loadMore={this.loadMoreData}
-                hasMore={this.state.hasMore}
-                loader={<div className='loader' key={0}>Loading...</div>}
-              >
-                {
-                  data.map((post) => (
-                    <Post title={post.title} content={post.content} key={post.id} />
-                  ))
-                }
-              </InfiniteScroll>
+              {
+                data.map((post) => (
+                  <Post title={post.title} content={post.content} key={post.id} />
+                ))
+              }
             </div>)
             : <Error message='Could not load posts, please try again.' />
         }
