@@ -22,6 +22,8 @@
     "express": "^4.16.4",
     "next": "^8.0.3",
     "react": "^16.8.5",
-    "react-dom": "^16.8.5"
+    "react-dom": "^16.8.5",
+    "react-infinite-scroller": "^1.2.4",
+    "unfetch": "^4.1.0"
   }
 }

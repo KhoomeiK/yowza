@@ -11,8 +11,19 @@ const handle = app.getRequestHandler();
 app.prepare().then(() => {
   const server = express();
 
-  server.get('/', (req, res) => {
-    return app.render(req, res, '/', req.query);
+  // Main page (if an ID is provided, it will be the first rendered post)
+  server.get('/:id?', (req, res) => {
+    const posts = {
+      1: { title: 'Title', content: 'Content' },
+      2: { title: 'Title', content: 'Content' },
+      3: { title: 'Title', content: 'Content' },
+      4: { title: 'Title', content: 'Content' },
+      5: { title: 'Title', content: 'Content' },
+      6: { title: 'Title', content: 'Content' },
+      7: { title: 'Title', content: 'Content' }
+    };
+
+    return app.render(req, res, '/', { ...req.query, posts });
   });
 
   server.get('*', (req, res) => {

@@ -1,10 +1,12 @@
-export default (props) => (
-  <div>
-    <h1>
-      { props.title }
-    </h1>
+export default function Post (props) {
+  return (
     <div>
-      {props.content}
+      <h1>
+        { props.title }
+      </h1>
+      <div>
+        { props.content }
+      </div>
     </div>
-  </div>
-);
+  );
+}
