@@ -50,7 +50,7 @@ if (production) {
       let dbo = db.db('test');
       let post = await dbo.collection('posts').findOne({ "data": { $all: [req.params.id] } });
       
-      res.send(post);
+      res.send(post.data);
     });
   });
 
