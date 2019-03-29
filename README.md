@@ -10,3 +10,6 @@ Run `npm start`.
 
 First run `npm run build` to build the website.  
 Then run `npm run prod` to deploy in production.
+
+## Todo
+- Pages that are too short don't allow scrolling
