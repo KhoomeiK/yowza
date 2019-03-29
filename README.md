@@ -13,3 +13,5 @@ Then run `npm run prod` to deploy in production.
 
 ## Todo
 - Pages that are too short don't allow scrolling
+- Google Ads
+- Domain
