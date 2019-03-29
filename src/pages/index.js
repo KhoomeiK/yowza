@@ -49,8 +49,8 @@ export default class Index extends Component {
   }
 
   async componentWillMount () {
-    const id = 'b4jn8z';
-    await this.loadMoreData(id);
+    const id = window.location.href.split('/')[3];
+    await this.loadMoreData(id !== '' ? id : null);
   }
 
   // This loads data from the API and sets it to the state (using this.loadData)
@@ -123,7 +123,9 @@ function processTitle (rawTitle) {
   if (matches && matches.length > 0) {
     finalTitle = finalTitle
       .replace(regexp, '')
+      .replace('your', 'their')
       .replace('you', matches[1].toLowerCase())
+      .replace('you', 'them')
       .trim();
   }
 
