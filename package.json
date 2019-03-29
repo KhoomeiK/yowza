@@ -29,7 +29,9 @@
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
     "react-infinite-scroller": "^1.2.4",
-    "react-scripts": "2.1.8"
+    "react-markdown": "^4.0.6",
+    "react-scripts": "2.1.8",
+    "sentence-splitter": "^3.0.11"
   },
   "devDependencies": {
     "concurrently": "^4.1.0"

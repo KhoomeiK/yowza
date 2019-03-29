@@ -1,26 +1,46 @@
 import React from 'react';
+import { split } from 'sentence-splitter';
 
-function eachComment(content) {
-  let arr = []
-  for (let i of content) {
-    let s = i.split('.');
-    let f = s[0];
-    s.shift();
-    s = s.toString();
-    arr.push(<p><b>{f}</b>{s}</p>);
-  }
-  return arr;
-}
+import Comment from './comment';
 
-export default function Post(props) {
+const postStyle = {
+  marginBottom: '2.5em',
+  borderBottom: '2px solid #e1e4e8'
+};
+
+const titleStyle = {
+  fontSize: '2.5rem',
+  marginBottom: '0.5em',
+  lineHeight: 1.25,
+  fontWeight: 600
+};
+
+export default function Post (props) {
   return (
-    <div>
-      <h1>
+    <div style={postStyle}>
+      <h1 style={titleStyle}>
         {props.title}
       </h1>
       <div>
-        {eachComment(props.content)}
+        {
+          props.content.map(processComment).map((value, index) =>
+            <Comment
+              key={value[0].replace(' ', '-').trim()}
+              index={index + 1}
+              title={value[0]}
+              content={value[1]}
+            />
+          )
+        }
       </div>
     </div>
   );
+}
+
+function processComment (content) {
+  const splitContent = split(content)[0];
+  // Get first sentence and make sure first letter is uppercase
+  const commentTitle = (splitContent.raw.charAt(0).toUpperCase() + splitContent.raw.slice(1));
+  const commentContent = content.substring(splitContent.range[1]);
+  return [commentTitle, commentContent];
 }

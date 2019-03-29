@@ -6,7 +6,6 @@ import Page from '../layouts/main';
 import Post from '../components/post';
 import Error from '../components/error';
 
-
 /**
  * The way this works is:
  * - First load (Server Rendering) saves everything to props
@@ -25,44 +24,44 @@ import Error from '../components/error';
  */
 
 export default class Index extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {
       hasMore: true,
       used: [],
       posts: [],
-      loading: false
+      loading: true
     };
 
     window.onscroll = async () => {
       if (
-        window.innerHeight + document.documentElement.scrollTop
-        >= document.documentElement.offsetHeight - 150 &&
+        window.innerHeight + document.documentElement.scrollTop >=
+        document.documentElement.offsetHeight - 150 &&
         !this.state.loading
       ) {
         this.setState({ loading: true });
         await this.loadMoreData();
         this.setState({ loading: false });
       }
-    }
+    };
 
     this.loadMoreData = this.loadMoreData.bind(this);
   }
 
-  async componentWillMount() {
+  async componentWillMount () {
     const id = 'b4jn8z';
     await this.loadMoreData(id);
   }
 
   // This loads data from the API and sets it to the state (using this.loadData)
-  async loadMoreData(id) {
+  async loadMoreData (id) {
     let newPosts;
     if (id) {
       const { data } = await axios.get('http://35.247.79.142/api/' + id);
-      newPosts = { id: data[0], title: data[1], content: data[2] }
+      newPosts = { id: data[0], title: data[1], content: data[2] };
     } else {
       const { data } = await axios.post('http://35.247.79.142/api', { 'used': this.state.posts.map(post => post.id) });
-      newPosts = { id: data[0], title: data[1], content: data[2] }
+      newPosts = { id: data[0], title: data[1], content: data[2] };
     }
 
     /**
@@ -78,27 +77,55 @@ export default class Index extends Component {
       // Merge current and new posts
       posts: previousState.posts.concat(newPosts),
       // Update whether or not it has more posts
-      hasMore: newPosts.length !== 0
+      hasMore: newPosts.length !== 0,
+      // Tell React that it's ready to render
+      loading: false
     }));
   }
 
-  render() {
+  render () {
     // Merge props and state to render it
-    const data = this.state.posts;
+    const { loading, posts } = this.state;
     return (
       <Page>
         {
-          data && data.length > 0
-            ? (<div id='posts'>
-              {
-                data.map((post) => (
-                  <Post title={post.title} content={post.content} key={post.id} />
-                ))
-              }
-            </div>)
-            : <Error message='Could not load posts, please try again.' />
+          posts && posts.length > 0
+            ? (
+              <div id='posts'>
+                {
+                  posts.map((post) => (
+                    <Post
+                      title={processTitle(post.title)}
+                      content={post.content}
+                      key={post.id}
+                    />
+                  ))
+                }
+              </div>
+            )
+            : (
+              loading ? <p>Loading...</p>
+                : <Error message='Could not load posts, please try again.' />
+            )
+
         }
       </Page>
     );
   }
+}
+
+function processTitle (rawTitle) {
+  const regexp = /(.*)( of [Rr]eddit[:,] ?)/;
+  const matches = regexp.exec(rawTitle);
+
+  let finalTitle = rawTitle;
+
+  if (matches && matches.length > 0) {
+    finalTitle = finalTitle
+      .replace(regexp, '')
+      .replace('you', matches[1].toLowerCase())
+      .trim();
+  }
+
+  return (finalTitle.charAt(0).toUpperCase() + finalTitle.slice(1)).trim();
 }
