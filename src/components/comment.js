@@ -20,7 +20,13 @@ export default function Comment (props) {
     <div style={commentStyle}>
       <h2 style={titleStyle}>{props.index}. {props.title}</h2>
       <div style={contentStyle}>
-        <ReactMarkdown source={props.content} skipHtml />
+        <ReactMarkdown
+          source={props.content}
+          skipHtml
+          // Make it so code tags are not escaped into <pre><code> (because it somehow fucks up the styling)
+          disallowedTypes={['code']}
+          unwrapDisallowed
+        />
       </div>
     </div>
   );

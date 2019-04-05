@@ -9,6 +9,11 @@ const navStyle = {
   backgroundColor: 'white'
 };
 
+const containerStyle = {
+  maxWidth: '75em',
+  margin: '0 auto'
+};
+
 const titleStyle = {
   display: 'inline-block',
   margin: 0,
@@ -19,9 +24,11 @@ const titleStyle = {
 export default function Navbar () {
   return (
     <nav style={navStyle}>
-      <a href='/'>
-        <h1 style={titleStyle}>Yowza!</h1>
-      </a>
+      <div style={containerStyle}>
+        <a href='/'>
+          <h1 style={titleStyle}>Yowza!</h1>
+        </a>
+      </div>
     </nav>
   );
 }

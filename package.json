@@ -28,8 +28,8 @@
     "mongodb": "^3.2.2",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
-    "react-infinite-scroller": "^1.2.4",
     "react-markdown": "^4.0.6",
+    "react-responsive": "^6.1.1",
     "react-scripts": "2.1.8",
     "sentence-splitter": "^3.0.11"
   },

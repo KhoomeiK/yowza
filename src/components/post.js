@@ -2,6 +2,7 @@ import React from 'react';
 import { split } from 'sentence-splitter';
 
 import Comment from './comment';
+import MobileAds from './mobile-ads';
 
 const postStyle = {
   marginBottom: '2.5em',
@@ -23,7 +24,7 @@ export default function Post (props) {
       </h1>
       <div>
         {
-          props.content.map(processComment).map((value, index) =>
+          props.content.filter(value => value !== '[removed]' && value !== '[deleted]').map(processComment).map((value, index) =>
             <Comment
               key={value[0].replace(' ', '-').trim()}
               index={index + 1}
@@ -33,6 +34,7 @@ export default function Post (props) {
           )
         }
       </div>
+      <MobileAds />
     </div>
   );
 }

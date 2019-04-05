@@ -13,7 +13,7 @@ server.use(bodyParser.json());
 
 // Host built files if production mode
 if (production) {
-  server.use(express.static('build'))
+  server.use(express.static('build'));
 
   // MongoDB/API
   const mongo = require('mongodb').MongoClient;
@@ -33,9 +33,7 @@ if (production) {
           }
         }]).next();
 
-        if (arr.length == dbo.collection('posts').count())
-          return; // dont send anything at end
-
+        if (arr.length === dbo.collection('posts').count()) return; // dont send anything at end
       } while (arr.indexOf(post.data[0]) !== -1); // while post id isnt in array
       // need to account for if all posts are read
       res.send(post.data);
@@ -48,8 +46,8 @@ if (production) {
       if (err) throw err;
 
       let dbo = db.db('test');
-      let post = await dbo.collection('posts').findOne({ "data": { $all: [req.params.id] } });
-      
+      let post = await dbo.collection('posts').findOne({ 'data': { $all: [req.params.id] } });
+
       res.send(post.data);
     });
   });
