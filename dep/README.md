@@ -15,3 +15,4 @@ Then run `npm run prod` to deploy in production.
 - Pages that are too short don't allow scrolling
 - Google Ads
 - Domain
+- 404 unfound post
