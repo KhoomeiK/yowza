@@ -19,4 +19,4 @@ const connectDB = async () => {
     process.exit();
   }
 };
-module.exports = connectDB; // allows for the connectDB function to be exported for use in server.js
+module.exports = connectDB; // allows for the connectDB function to be exported for use in index.js
