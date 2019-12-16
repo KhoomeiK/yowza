@@ -10,6 +10,8 @@
     "lint:fix": "eslint --fix . --ext .jsx"
   },
   "dependencies": {
+    "config": "^3.2.4",
+    "mongoose": "^5.8.1",
     "next": "9.1.5",
     "react": "16.12.0",
     "react-dom": "16.12.0",
