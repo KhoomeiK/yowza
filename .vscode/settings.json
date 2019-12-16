@@ -1,8 +1,8 @@
 {
-    "files.eol": "\n",
-    "files.insertFinalNewline": true,
-    "editor.formatOnSave": false,
-    "editor.insertSpaces": true,
-    "editor.tabSize": 2,
-    "prettier.singleQuote": true
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "editor.formatOnSave": false,
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
+  "eslint.autoFixOnSave": true
 }
