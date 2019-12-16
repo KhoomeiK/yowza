@@ -1,5 +1,5 @@
 # Yowza Server
 
-[< Go Back To Root](..)
+[< Go Back To Root](https://github.com/KhoomeiK/yowza)
 
-Server for database, fetching, data processing, etc.
+Codebase for database, fetching, data processing, etc.
