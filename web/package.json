@@ -1,17 +1,15 @@
 {
-  "name": "yowza",
+  "name": "yowza-web",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "start": "next dev",
     "build": "next build",
     "prod": "next start",
-    "lint": "eslint . --ext .jsx",
-    "lint:fix": "eslint --fix . --ext .jsx"
+    "lint": "eslint . --ext .js,.jsx",
+    "lint:fix": "eslint --fix . --ext .js,.jsx"
   },
   "dependencies": {
-    "config": "^3.2.4",
-    "mongoose": "^5.8.1",
     "next": "9.1.5",
     "react": "16.12.0",
     "react-dom": "16.12.0",
