@@ -1,5 +1,4 @@
 import App from 'next/app';
-// import './style.css';
 
 export default class YowzaApp extends App {
   componentDidMount() {

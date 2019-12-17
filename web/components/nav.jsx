@@ -1,49 +1,62 @@
 import React from 'react';
 import Link from 'next/link';
 import { createUseStyles } from 'react-jss';
+import { Colors, Styles } from '@src/utils/config';
 
 const useStyles = createUseStyles({
   nav: {
-    textAlign: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    boxShadow: '0 1px 0 hsla(0,3%,67%,.1), 0 2px 1px hsla(0,1%,71%,.1)',
+    position: 'fixed',
+    top: 0,
+    zIndex: 100,
+    width: '100%',
   },
   list: {
+    maxWidth: Styles.maxWidth,
+    margin: '0 auto',
+    padding: '1rem',
+
     display: 'flex',
-    justifyContent: 'space-between',
-    padding: '4px 16px',
   },
   listItem: {
     display: 'flex',
     padding: '6px 8px',
   },
   link: {
-    color: '#067df7',
+    color: Colors.primary,
     textDecoration: 'none',
-    fontSize: '13px',
+    fontWeight: '500',
+    fontSize: '1rem',
+  },
+  logo: {
+    // Allows .logo to extend all of the properties from .link
+    extend: 'link',
+
+    fontWeight: 'bold',
   },
 });
 
-const links = [
-  { href: 'https://zeit.co/now', label: 'ZEIT' },
-  { href: 'https://github.com/zeit/next.js', label: 'GitHub' },
-].map((link) => ({ ...link, key: `nav-link-${link.href}-${link.label}` }));
-
 const Nav = () => {
-  const classes = useStyles();
+  const styles = useStyles();
   return (
-    <nav className={classes.nav}>
-      <ul className={classes.list}>
-        <li className={classes.listItem}>
+    <nav className={styles.nav}>
+      <ul className={styles.list}>
+        <li className={styles.listItem}>
           <Link href="/">
-            <a>Home</a>
+            <a className={styles.logo}>YOWZA!</a>
           </Link>
         </li>
-        {links.map(({ key, href, label }) => (
-          <li key={key} className={classes.listItem}>
-            <a href={href} className={classes.link}>
-              {label}
-            </a>
-          </li>
-        ))}
+        <li className={styles.listItem}>
+          <Link href="/trending">
+            <a className={styles.link}>Trending</a>
+          </Link>
+        </li>
+        <li className={styles.listItem}>
+          <Link href="/random">
+            <a className={styles.link}>Random</a>
+          </Link>
+        </li>
       </ul>
     </nav>
   );

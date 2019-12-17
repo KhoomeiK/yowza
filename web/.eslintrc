@@ -6,12 +6,16 @@
     "browser": true
   },
   "settings": {
+    "import/extensions": [
+      ".js",
+      ".jsx"
+    ],
     "import/resolver": {
       "alias": {
         "map": [
-          ["@", "./"]
+          ["@src", "./"]
         ],
-        "extensions": [".js", "jsx"]
+        "extensions": [".js", ".jsx"]
       }
     }
   },

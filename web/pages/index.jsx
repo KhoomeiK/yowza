@@ -1,7 +1,7 @@
 import React from 'react';
 import { createUseStyles } from 'react-jss';
 
-import Wrapper from '../components/wrapper';
+import Wrapper from '@src/components/wrapper';
 
 const useStyles = createUseStyles({
   hero: {

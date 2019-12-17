@@ -26,11 +26,12 @@ export default class JssDocument extends Document {
           <style id="server-side-styles">{registry.toString()}</style>
           <style global jsx>
             {`
-              body {
+              html,body {
                 margin: 0;
                 padding: 0;
                 font-family: -apple-system, BlinkMacSystemFont, Avenir Next,
                   Avenir, Helvetica, sans-serif;
+                background-color: #f7f7f7;
               }
             `}
           </style>
