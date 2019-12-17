@@ -44,7 +44,7 @@ const processTitle = (rawTitle) => {
     return { post: title, comments: Array.from(comments), slug: Slug(title) };
   }));
   docs = docs.filter((doc) => !(/[Rr]eddit/g.exec(doc.post)));
-  console.log(docs);
+  //console.log(docs);
 
   try {
     await mongoose.connect(db, {
@@ -57,14 +57,15 @@ const processTitle = (rawTitle) => {
     await Promise.all(
       docs.map(async (element) => {
         const { post, comments } = element;
-        console.log(comments);
         const finalPost = new Post({
           post,
           comments,
         });
         await finalPost.save();
+
       }),
     );
+    process.exit();
   } catch (err) {
     console.error(err.message);
     process.exit();
