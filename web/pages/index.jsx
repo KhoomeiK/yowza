@@ -1,8 +1,7 @@
 import React from 'react';
-import Head from 'next/head';
 import { createUseStyles } from 'react-jss';
 
-import Nav from '../components/nav';
+import Wrapper from '../components/wrapper';
 
 const useStyles = createUseStyles({
   hero: {
@@ -54,14 +53,7 @@ const useStyles = createUseStyles({
 const Home = () => {
   const classes = useStyles();
   return (
-    <div>
-      <Head>
-        <title>Home</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <Nav />
-
+    <Wrapper>
       <div className={classes.hero}>
         <h1 className={classes.title}>Welcome to Next.js!</h1>
         <p className={classes.description}>
@@ -88,7 +80,7 @@ const Home = () => {
           </a>
         </div>
       </div>
-    </div>
+    </Wrapper>
   );
 };
 
