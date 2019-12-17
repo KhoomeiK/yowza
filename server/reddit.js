@@ -56,10 +56,11 @@ const processTitle = (rawTitle) => {
     console.log('MongoDB connected...');
     await Promise.all(
       docs.map(async (element) => {
-        const { post, comments } = element;
+        const { post, comments, slug } = element;
         const finalPost = new Post({
           post,
           comments,
+          slug,
         });
         await finalPost.save();
 

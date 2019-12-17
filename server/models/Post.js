@@ -9,6 +9,10 @@ const PostSchema = new mongoose.Schema({
     type: [String],
     required: true,
   },
+  slug: {
+    type: String,
+    required: true,
+  }
 });
 
 const Post = mongoose.model('post', PostSchema);
