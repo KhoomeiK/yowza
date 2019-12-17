@@ -8,8 +8,13 @@
   },
   "dependencies": {
     "config": "^3.2.4",
+<<<<<<< HEAD
     "express": "^4.17.1",
     "mongoose": "^5.8.1"
+=======
+    "mongoose": "^5.8.1",
+    "snoowrap": "^1.20.1"
+>>>>>>> bbd38bc395c8143a216a1692bf95fc8865f0be6f
   },
   "devDependencies": {
     "eslint": "^6.1.0",

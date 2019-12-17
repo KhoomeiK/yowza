@@ -13,7 +13,11 @@
     "next": "9.1.5",
     "react": "16.12.0",
     "react-dom": "16.12.0",
+<<<<<<< HEAD:package.json
+    "snoowrap": "^1.20.1"
+=======
     "react-jss": "^10.0.0"
+>>>>>>> 6ebae36b91df1a99dde60c0af1beaa764d5792c0:web/package.json
   },
   "devDependencies": {
     "eslint": "^6.1.0",
