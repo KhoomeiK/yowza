@@ -1,5 +1,10 @@
 const Snoowrap = require('snoowrap');
 const Slug = require('slug');
+const mongoose = require('mongoose');
+const config = require('config');
+const Post = require('./models/Post');
+
+const db = config.get('mongoURI');
 
 const processTitle = (rawTitle) => {
   let finalTitle = rawTitle.trim();
@@ -40,6 +45,31 @@ const processTitle = (rawTitle) => {
   }));
   docs = docs.filter((doc) => !(/[Rr]eddit/g.exec(doc.post)));
   console.log(docs);
+
+  try {
+    await mongoose.connect(db, {
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+      useCreateIndex: true,
+      useFindAndModify: false,
+    });
+    console.log('MongoDB connected...');
+    await Promise.all(
+      docs.map(async (element) => {
+        const { post, comments } = element;
+        console.log(comments);
+        const finalPost = new Post({
+          post,
+          comments,
+        });
+        await finalPost.save();
+      }),
+    );
+  } catch (err) {
+    console.error(err.message);
+    process.exit();
+  }
+
   // TODO: push doc, which represents one article, into the database
 })();
 

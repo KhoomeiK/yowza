@@ -4,5 +4,12 @@
   "editor.formatOnSave": false,
   "editor.insertSpaces": true,
   "editor.tabSize": 2,
-  "eslint.autoFixOnSave": true,
+  "editor.codeActionsOnSave": {
+    // Eslint autofix on save
+    "source.fixAll.eslint": true
+  },
+  "eslint.workingDirectories": [
+    "web",
+    "server"
+  ]
 }
