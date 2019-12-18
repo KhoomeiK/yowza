@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const PostSchema = new mongoose.Schema({
+const ArticleSchema = new mongoose.Schema({
   post: {
     type: String,
     required: true,
@@ -12,8 +12,8 @@ const PostSchema = new mongoose.Schema({
   slug: {
     type: String,
     required: true,
-  }
+  },
 });
 
-const Post = mongoose.model('post', PostSchema);
-module.exports = Post;
+const Article = mongoose.model('post', ArticleSchema);
+module.exports = Article;

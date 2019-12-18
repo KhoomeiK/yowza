@@ -1,10 +1,6 @@
 const Snoowrap = require('snoowrap');
 const Slug = require('slug');
-const mongoose = require('mongoose');
-const config = require('config');
-const Post = require('./models/Post');
-
-const db = config.get('mongoURI');
+const { saveArticles } = require('./database/db');
 
 const processTitle = (rawTitle) => {
   let finalTitle = rawTitle.trim();
@@ -27,7 +23,7 @@ const processTitle = (rawTitle) => {
 };
 
 (async () => {
-  const r = new Snoowrap({
+  const r = new Snoowrap({ // reddit API wrapper
     username: 'WebsterBot',
     password: 'G*c-+#6d^8V%$_6=',
     client_id: '_fRmFVzOM5jYHQ',
@@ -35,44 +31,21 @@ const processTitle = (rawTitle) => {
     user_agent: 'actualsnek wtwbot test 0.0',
   });
 
-  const top = await r.getSubreddit('AskReddit').getTop();
-  let docs = await Promise.all(top.filter((p) => p.score > 3000).map(async (p) => {
-    const post = await p.expandReplies({ depth: 1, limit: 3 });
-    const comments = post.comments.filter((c) => c.score > p.score / 4).map((c) => c.body);
-    let { title } = post;
-    title = processTitle(title);
-    return { post: title, comments: Array.from(comments), slug: Slug(title) };
-  }));
-  docs = docs.filter((doc) => !(/[Rr]eddit/g.exec(doc.post)));
-  //console.log(docs);
-
   try {
-    await mongoose.connect(db, {
-      useUnifiedTopology: true,
-      useNewUrlParser: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
-    });
-    console.log('MongoDB connected...');
-    await Promise.all(
-      docs.map(async (element) => {
-        const { post, comments, slug } = element;
-        const finalPost = new Post({
-          post,
-          comments,
-          slug,
-        });
-        await finalPost.save();
+    const top = await r.getSubreddit('AskReddit').getTop(); // fetch top AskReddit posts for today
+    let docs = await Promise.all(top.filter((p) => p.score > 3000).map(async (p) => {
+      const post = await p.expandReplies({ depth: 1, limit: 3 }); // load comments
+      const comments = post.comments.filter((c) => c.score > p.score / 4).map((c) => c.body);
+      let { title } = post;
+      title = processTitle(title); // title cleaning
+      return { post: title, comments: Array.from(comments), slug: Slug(title) }; // Article object
+    })); // builds array of Article objects
+    docs = docs.filter((doc) => !(/[Rr]eddit/g.exec(doc.post))); // final filtering
 
-      }),
-    );
-    process.exit();
+    await saveArticles(docs); // uploads to Mongo
   } catch (err) {
-    console.error(err.message);
-    process.exit();
+    console.log('Could not fetch from Reddit', err);
   }
-
-  // TODO: push doc, which represents one article, into the database
 })();
 
 /*

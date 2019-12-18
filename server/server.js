@@ -1,16 +1,19 @@
-const express = require('express')
+const express = require('express');
+const { fetchArticle } = require('./database/db');
 
-const app = express()
+const app = express();
+const PORT = process.env.PORT || 3000;
+app.use(express.json({ extended: false }));
+app.listen(PORT, () => console.log(`Server running on ${PORT}`));
 
-const connectDB = require('./config/db')
+app.get('/', (req, res) => {
+  res.send('Welcome to Yowza!');
+});
 
-// connect to mongodb database
-connectDB()
+app.get('/a/:slug', async (req, res) => {
+  res.send(await fetchArticle(req.params.slug));
+});
 
-app.use(express.json({ extended: false }))
-
-app.get('/', (req, res) => res.send('test'))
-
-const PORT = process.env.PORT || 5000
-
-app.listen(PORT, () => console.log(`Server running on ${PORT}`))
+app.get('/*', (req, res) => {
+  res.send('Error 404');
+});
