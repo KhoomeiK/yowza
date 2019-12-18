@@ -19,47 +19,56 @@ const connectDB = async () => {
   }
 };
 
+const fetchRandom = async (num) => {
+  try {
+    await connectDB();
+    const articles = await Article.aggregate([{ $sample: { size: num } }]);
+    return articles;
+  } catch (err) {
+    console.error('Could not fetch random from database');
+    return 'No articles available';
+  }
+};
+
 const fetchArticle = async (slug) => {
   try {
     await connectDB();
-    let article = await Article.findOne({ slug });
-    if (article) {
-      //console.log(article)
-      return article
-    }
-
+    const article = await Article.findOne({ slug });
+    await article.updateOne({ views: article.views + 1 });
+    return article;
   } catch (err) {
-    console.error('Could not fetch from database');
+    console.error('Could not fetch article from database');
     return 'This article does not exist';
   }
 };
 
 const saveArticles = async (docs) => {
-  let savedCount = 0 // counts how many docs are saved
+  let savedCount = 0; // counts how many docs are saved
   try { // database connection
     await connectDB();
     await Promise.all(
       docs.map(async (element) => {
         const { post, comments, slug } = element;
-        // TODO: check if article already in database
         let finalPost = await Article.findOne({ slug });
         if (!finalPost) {
-         finalPost = new Article({
-          post,
-          comments,
-          slug,
-        });
-        await finalPost.save(); // adds article to database
-        savedCount++
-      }
+          finalPost = new Article({
+            post,
+            comments,
+            slug,
+          });
+          await finalPost.save(); // adds article to database
+          savedCount += 1;
+        }
       }),
     );
     console.log('Articles saved:', savedCount);
     process.exit();
   } catch (err) {
-    console.error(err);
+    console.error('Could not save articles to database');
     process.exit();
   }
 };
 
-module.exports = { connectDB, fetchArticle, saveArticles };
+module.exports = {
+  connectDB, fetchRandom, fetchArticle, saveArticles,
+};
