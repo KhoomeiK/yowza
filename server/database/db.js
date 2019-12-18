@@ -35,7 +35,7 @@ const fetchArticle = async (slug) => {
 };
 
 const saveArticles = async (docs) => {
-  let savedCount = 0
+  let savedCount = 0 // counts how many docs are saved
   try { // database connection
     await connectDB();
     await Promise.all(
@@ -54,11 +54,9 @@ const saveArticles = async (docs) => {
       }
       }),
     );
-
     console.log('Articles saved:', savedCount);
     process.exit();
   } catch (err) {
-    console.error('Could not post to database');
     console.error(err);
     process.exit();
   }
