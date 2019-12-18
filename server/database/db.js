@@ -22,8 +22,12 @@ const connectDB = async () => {
 const fetchArticle = async (slug) => {
   try {
     await connectDB();
-    // TODO @Abhinav: fetch article based on passed slug
-    return slug;
+    let article = await Article.findOne({ slug });
+    if (article) {
+      console.log(article)
+      return article
+    }
+
   } catch (err) {
     console.error('Could not fetch from database');
     return 'This article does not exist';
@@ -31,25 +35,31 @@ const fetchArticle = async (slug) => {
 };
 
 const saveArticles = async (docs) => {
+  let savedCount = 0
   try { // database connection
     await connectDB();
     await Promise.all(
       docs.map(async (element) => {
         const { post, comments, slug } = element;
         // TODO: check if article already in database
-        const finalPost = new Article({
+        let finalPost = await Article.findOne({ slug });
+        if (!finalPost) {
+         finalPost = new Article({
           post,
           comments,
           slug,
         });
         await finalPost.save(); // adds article to database
+        savedCount++
+      }
       }),
     );
 
-    console.log('Articles saved:', docs.length);
+    console.log('Articles saved:', savedCount);
     process.exit();
   } catch (err) {
     console.error('Could not post to database');
+    console.error(err);
     process.exit();
   }
 };
