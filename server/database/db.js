@@ -24,7 +24,7 @@ const fetchArticle = async (slug) => {
     await connectDB();
     let article = await Article.findOne({ slug });
     if (article) {
-      console.log(article)
+      //console.log(article)
       return article
     }
 
