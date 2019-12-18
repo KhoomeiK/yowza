@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 const Article = require('./Article');
 
-const { db } = require('./default.json'); // gets the mongodb string
+const { mongoURI } = require('./default.json'); // gets the mongodb string
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(db, {
+    await mongoose.connect(mongoURI, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
       useCreateIndex: true,

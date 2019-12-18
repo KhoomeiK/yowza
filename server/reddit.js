@@ -1,6 +1,9 @@
 const Snoowrap = require('snoowrap');
 const Slug = require('slug');
 const { saveArticles } = require('./database/db');
+const {
+  username, password, clientId, clientSecret, userAgent,
+} = require('./database/default.json');
 
 const processTitle = (rawTitle) => {
   let finalTitle = rawTitle.trim();
@@ -24,11 +27,7 @@ const processTitle = (rawTitle) => {
 
 (async () => {
   const r = new Snoowrap({ // reddit API wrapper
-    username: 'WebsterBot',
-    password: 'G*c-+#6d^8V%$_6=',
-    client_id: '_fRmFVzOM5jYHQ',
-    client_secret: 'o_jPN2Mou9UbAJzN5I3zybCaKjo',
-    user_agent: 'actualsnek wtwbot test 0.0',
+    username, password, clientId, clientSecret, userAgent,
   });
 
   try {
