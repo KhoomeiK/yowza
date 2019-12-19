@@ -2,7 +2,7 @@ const express = require('express');
 const { fetchRandom, fetchArticle } = require('./database/db');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 app.use(express.json({ extended: false }));
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));
 
