@@ -13,17 +13,21 @@ app.get('/', async (req, res) => {
     slug: article.slug,
     views: article.views,
   }));
+  // TODO: Return error (with appropriate error status code pls) if there is an error
   res.send(articles);
 });
 
 app.get('/random', async (req, res) => {
   res.send(await fetchRandom(1)); // fetches 1 random post
+  // TODO: Return error (with appropriate error status code pls) if there is an error
 });
 
 app.get('/a/:slug', async (req, res) => {
   res.send(await fetchArticle(req.params.slug));
+  // TODO: Return error (with appropriate error status code pls) if there is an error
 });
 
 app.get('/*', (req, res) => {
-  res.send('Error 404');
+  res.status(404);
+  res.send('Not Found.');
 });
