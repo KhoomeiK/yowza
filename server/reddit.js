@@ -38,7 +38,7 @@ const processTitle = (rawTitle) => {
       const comments = post.comments.filter((c) => c.score > p.score / 4).map((c) => c.body);
       let { title } = post;
       title = processTitle(title); // title cleaning
-      return { post: title, comments: Array.from(comments), slug: Slug(title) }; // Article object
+      return { post: title, comments: Array.from(comments), slug: Slug(title).toLowerCase() }; // Article object
     })); // builds array of Article objects
     docs = docs.filter((doc) => !(/[Rr]eddit/g.exec(doc.post))); // final filtering
     console.log(docs);
