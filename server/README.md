@@ -4,6 +4,11 @@
 
 Codebase for database, fetching, data processing, etc.
 
+# TODO FROM MIGUEL:
+- Document API by showing an example of output (json)
+- Add error checking & handling (send me an error object with message & status code)
+- Also document errors that can be thrown and what they look like (don't need for all, but at least a section that shows in general what the errors look like)
+
 # Express API Documentation
 
 ## '/'
