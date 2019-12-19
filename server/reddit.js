@@ -1,5 +1,6 @@
 const Snoowrap = require('snoowrap');
 const Slug = require('slug');
+const { addImageToDocs } = require('./keywords');
 const { saveArticles } = require('./database/db');
 const {
   username, password, clientId, clientSecret, userAgent,
@@ -40,7 +41,9 @@ const processTitle = (rawTitle) => {
       return { post: title, comments: Array.from(comments), slug: Slug(title) }; // Article object
     })); // builds array of Article objects
     docs = docs.filter((doc) => !(/[Rr]eddit/g.exec(doc.post))); // final filtering
-
+    console.log(docs);
+    docs = await addImageToDocs(docs); // add image URLs
+    console.log(docs);
     await saveArticles(docs); // uploads to Mongo
   } catch (err) {
     console.log('Could not fetch from Reddit', err);

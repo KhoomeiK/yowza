@@ -9,8 +9,10 @@
   "dependencies": {
     "config": "^3.2.4",
     "express": "^4.17.1",
+    "images-scraper": "^3.0.2",
     "mongoose": "^5.8.1",
     "nodemon": "^2.0.2",
+    "parts-of-speech": "^0.3.0",
     "slug": "^1.1.0",
     "snoowrap": "^1.20.1"
   },

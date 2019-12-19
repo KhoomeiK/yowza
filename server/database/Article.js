@@ -24,6 +24,11 @@ const ArticleSchema = new mongoose.Schema({
     default: 0,
     required: false,
   },
+  images: { // image URL
+    type: String,
+    default: '',
+    required: false,
+  },
 });
 
 const Article = mongoose.model('post', ArticleSchema);

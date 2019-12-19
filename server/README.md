@@ -25,3 +25,4 @@ Codebase for database, fetching, data processing, etc.
 - Comment text processing
 - Relevant image/media content fetching
 - AdSense setup?
+- NSFW filtering?
