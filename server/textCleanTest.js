@@ -33,7 +33,8 @@ console.log(post);
 //   console.log(matches);
 
 //   if (matches && matches.length > 0) {
-//     // TODO: Check if there is at least one "you" otherwise, replace your by "{match[1]}'s" See post /b5121a for example
+//     // TODO: Check if there is at least one "you"
+//     // otherwise, replace your by "{match[1]}'s" See post /b5121a for example
 //     finalTitle = finalTitle.replace(matches[0], ', '); // Remove 'of Reddit'
 //     // .split('you')
 //     // .join(matches[1].toLowerCase()) // you -> __
