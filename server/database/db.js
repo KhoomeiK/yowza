@@ -22,29 +22,51 @@ const connectDB = async () => {
 const fetchRandom = async (num) => {
   try {
     await connectDB();
-    const articles = await Article.aggregate([{ $sample: { size: num } }]);
+    const articles = Article
+      .aggregate()
+      // Specify who many articles to fetch
+      .sample(num || 5)
+      // Specify which fields to fetch
+      .project({
+        images: 1,
+        post: 1,
+        slug: 1,
+        views: 1,
+        _id: 0, // ID must be specifically excluded
+      });
     return articles;
   } catch (err) {
-    console.error('Could not fetch random from database');
-    return {
-      error: true,
-      message: err,
-    };
+    console.error(`Coult not fetch random from database: ${err.message}`);
+    throw new Error(`Coult not fetch random from database: ${err.message}`);
   }
 };
 
 const fetchArticle = async (slug) => {
   try {
     await connectDB();
-    const article = await Article.findOne({ slug });
+    const article = await Article
+      .findOne({ slug })
+      // Specify which fields to fetch
+      .select({
+        // Anything not specified here is auto-excluded
+        comments: 1,
+        views: 1,
+        images: 1,
+        post: 1,
+        slug: 1,
+        date: 1,
+        _id: 0, // ID must be specifically excluded
+      });
+
+    if (!article) {
+      throw new Error(`No article found with slug "${slug}"`);
+    }
+
     await article.updateOne({ views: article.views + 1 });
     return article;
   } catch (err) {
-    console.error('Could not fetch article from database');
-    return {
-      error: true,
-      message: err,
-    };
+    console.error(`Coult not fetch article from database: ${err.message}`);
+    throw new Error(`Coult not fetch article from database: ${err.message}`);
   }
 };
 

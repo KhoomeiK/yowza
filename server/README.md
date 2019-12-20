@@ -4,29 +4,64 @@
 
 Codebase for database, fetching, data processing, etc.
 
-# TODO FROM MIGUEL:
-- Document API by showing an example of output (json)
-- Add error checking & handling (send me an error object with message & status code)
-- Also document errors that can be thrown and what they look like (don't need for all, but at least a section that shows in general what the errors look like)
+## Express API Documentation
 
-# Express API Documentation
+### Root: '/'
 
-## '/'
-- Fetches 5 random articles from the database and returns their title, slug, and viewcount
+Fetches 5 random articles from the database without their main content.
+You can then request for the individual slugs to load the articles.
 
-## '/a/:slug'
-- Fetches 1 article from the database with the matching slug
-- Increments viewcount of this article
-- Returns 'This article does not exist' if invalid slug
+```jsonc
+[
+  {
+    "images": "http://path.to/image.png", // optional
+    "post": "Article Title",
+    "slug": "Article_Title",
+    "views": 6 // optional
+  }
+  // ...
+]
+```
 
-## '/random'
-- Fetches 1 random article from the database
+### Article: '/a/:slug'
 
-## '/*'
-- Paths that don't match the above few will 404
+Fetches 1 article from the database with the matching slug.
+Increments the `views` (viewcount) for this article.
 
+```jsonc
+{
+  "comments": [
+    "example comment"
+    // ...
+  ],
+  "views": 6, // optional
+  "images": "http://path.to/image.png", // optional
+  "post": "Article Title",
+  "slug": "Article_Title",
+  "date": "2019-12-18T03:01:02.029Z"
+}
+```
 
-# TODOs:
+### Random: '/random'
+
+Fetches 1 random article from the database without its main content.
+You can then request for the individual slug to load the article.
+
+```jsonc
+{
+  "images": "http://path.to/image.png",
+  "post": "Article Title",
+  "slug": "Article_Title",
+  "views": 6 // optional
+}
+```
+
+### Any: '/\*'
+
+Paths that don't match the above few will 404
+
+## TODOs
+
 - Comment text processing
 - Relevant image/media content fetching
 - AdSense setup?
