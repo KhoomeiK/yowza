@@ -26,7 +26,10 @@ const fetchRandom = async (num) => {
     return articles;
   } catch (err) {
     console.error('Could not fetch random from database');
-    return 'No articles available';
+    return {
+      error: true,
+      message: err,
+    };
   }
 };
 
@@ -38,7 +41,10 @@ const fetchArticle = async (slug) => {
     return article;
   } catch (err) {
     console.error('Could not fetch article from database');
-    return 'This article does not exist';
+    return {
+      error: true,
+      message: err,
+    };
   }
 };
 

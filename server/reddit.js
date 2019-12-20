@@ -1,5 +1,6 @@
 const Snoowrap = require('snoowrap');
 const Slug = require('slug');
+const marked = require('marked');
 const { addImageToDocs } = require('./keywords');
 const { saveArticles } = require('./database/db');
 const {
@@ -35,7 +36,7 @@ const processTitle = (rawTitle) => {
     const top = await r.getSubreddit('AskReddit').getTop(); // fetch top AskReddit posts for today
     let docs = await Promise.all(top.filter((p) => p.score > 3000).map(async (p) => {
       const post = await p.expandReplies({ depth: 1, limit: 3 }); // load comments
-      const comments = post.comments.filter((c) => c.score > p.score / 4).map((c) => c.body);
+      const comments = post.comments.filter((c) => c.score > p.score / 4).map((c) => marked(c.body));
       let { title } = post;
       title = processTitle(title); // title cleaning
       return { post: title, comments: Array.from(comments), slug: Slug(title).toLowerCase() }; // Article object
