@@ -5,7 +5,7 @@ const { addImageToDocs } = require('./keywords');
 const { saveArticles } = require('./database/db');
 const {
   username, password, clientId, clientSecret, userAgent,
-} = require('./database/default.json');
+} = require('./database/.env.json');
 
 const processTitle = (rawTitle) => {
   let finalTitle = rawTitle.trim();

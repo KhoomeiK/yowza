@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Article = require('./Article');
 
-const { mongoURI } = require('./default.json'); // gets the mongodb string
+const { mongoURI } = require('./.env.json'); // gets the mongodb string
 
 const connectDB = async () => {
   try {
