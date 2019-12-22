@@ -1,7 +1,7 @@
 const Snoowrap = require('snoowrap');
 const Slug = require('slug');
 const marked = require('marked');
-const { addImageToDocs } = require('./keywords');
+const { imageFromText } = require('./keywords');
 const { saveArticles } = require('./database/db');
 const {
   username, password, clientId, clientSecret, userAgent,
@@ -49,7 +49,14 @@ const processTitle = (rawTitle) => {
     })); // builds array of Article objects
     docs = docs.filter((doc) => !(/[Rr]eddit/g.exec(doc.post))); // final filtering
     console.log(docs);
-    docs = await addImageToDocs(docs); // add image URLs
+    docs = await Promise.all(docs.map(async (doc) => ({
+      ...doc,
+      image: await imageFromText(doc.post),
+      comments: await Promise.all(doc.comments.map(async (comment) => ({
+        text: comment,
+        image: comment.length < 40 ? await imageFromText(comment) : null,
+      }))),
+    })));
     console.log(docs);
     await saveArticles(docs); // uploads to Mongo
   } catch (err) {

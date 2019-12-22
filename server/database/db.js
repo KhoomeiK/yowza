@@ -102,7 +102,7 @@ const saveArticles = async (docs) => {
     console.log('Articles saved:', savedCount);
     process.exit();
   } catch (err) {
-    console.error('Could not save articles to database');
+    console.error('Could not save articles to database', err);
     process.exit();
   }
 };
