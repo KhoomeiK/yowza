@@ -22,8 +22,7 @@ const connectDB = async () => {
 const fetchRandom = async (num) => {
   try {
     await connectDB();
-    const articles = Article
-      .aggregate()
+    const articles = Article.aggregate()
       // Specify who many articles to fetch
       .sample(num || 5)
       // Specify which fields to fetch
@@ -44,8 +43,7 @@ const fetchRandom = async (num) => {
 const fetchArticle = async (slug) => {
   try {
     await connectDB();
-    const article = await Article
-      .findOne({ slug })
+    const article = await Article.findOne({ slug })
       // Specify which fields to fetch
       .select({
         // Anything not specified here is auto-excluded
@@ -72,11 +70,23 @@ const fetchArticle = async (slug) => {
 
 const saveArticles = async (docs) => {
   let savedCount = 0; // counts how many docs are saved
-  try { // database connection
+  try {
+    // database connection
     await connectDB();
     await Promise.all(
       docs.map(async (element) => {
-        const { post, comments, slug } = element;
+        let { post } = element;
+        const { comments, slug } = element;
+        // early comment cleaning
+        if (post.startsWith('[Serious] ')) {
+          post = post.replace('[Serious] ', '');
+        }
+        for (let i = comments.length - 1; i >= 0; i -= 1) {
+          if (comments[i].includes('reddit')) {
+            comments.splice(i, 1);
+          }
+        }
+        // this lowkey wack af i dont really know how else to clean comments
         let finalPost = await Article.findOne({ slug });
         if (!finalPost) {
           finalPost = new Article({
@@ -98,5 +108,8 @@ const saveArticles = async (docs) => {
 };
 
 module.exports = {
-  connectDB, fetchRandom, fetchArticle, saveArticles,
+  connectDB,
+  fetchRandom,
+  fetchArticle,
+  saveArticles,
 };
