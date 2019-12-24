@@ -1,6 +1,6 @@
 const Snoowrap = require('snoowrap');
 const Slug = require('slug');
-const marked = require('marked');
+// const marked = require('marked');
 const { imageFromText, processTitle } = require('./textProcessing');
 const { saveArticles } = require('./database/db');
 const {
@@ -16,9 +16,7 @@ const {
     const top = await r.getSubreddit('AskReddit').getTop(); // fetch top AskReddit posts for today
     let docs = await Promise.all(top.filter((p) => p.score > 3000).map(async (p) => {
       const post = await p.expandReplies({ depth: 1, limit: 3 }); // load comments
-      const comments = post.comments
-        .filter((c) => c.score > p.score / 4)
-        .map((c) => marked(c.body));
+      const comments = post.comments.filter((c) => c.score > p.score / 4).map((c) => c.body);
       let { title } = post;
       title = processTitle(title); // title cleaning
       return { // Article object
@@ -28,13 +26,12 @@ const {
       };
     })); // builds array of Article objects
     docs = docs.filter((doc) => !(/[Rr]eddit/g.exec(doc.post))); // final filtering
-    console.log(docs);
     docs = await Promise.all(docs.map(async (doc) => ({
       ...doc,
       image: await imageFromText(doc.post),
       comments: await Promise.all(doc.comments.map(async (comment) => ({
         text: comment,
-        image: comment.length < 40 ? await imageFromText(comment) : null,
+        image: comment.length < 40 ? 'await imageFromText(comment)' : 'null',
       }))),
     })));
     console.log(docs);

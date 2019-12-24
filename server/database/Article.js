@@ -6,7 +6,7 @@ const ArticleSchema = new mongoose.Schema({
     required: true,
   },
   comments: {
-    type: [Object],
+    type: [{ text: String, image: String }],
     required: true,
   },
   slug: {
@@ -24,7 +24,7 @@ const ArticleSchema = new mongoose.Schema({
     default: 0,
     required: false,
   },
-  images: { // image URL
+  image: { // image URL
     type: String,
     default: '',
     required: false,

@@ -63,29 +63,30 @@ const fetchArticle = async (slug) => {
     await article.updateOne({ views: article.views + 1 });
     return article;
   } catch (err) {
-    console.error(`Coult not fetch article from database: ${err.message}`);
-    throw new Error(`Coult not fetch article from database: ${err.message}`);
+    console.error(`Could not fetch article from database: ${err.message}`);
+    throw new Error(`Could not fetch article from database: ${err.message}`);
   }
 };
 
 const saveArticles = async (docs) => {
-  let savedCount = 0; // counts how many docs are saved
   try {
     // database connection
     await connectDB();
+    let savedCount = 0; // counts how many docs are saved
     await Promise.all(
       docs.map(async (element) => {
-        let { post } = element;
-        const { comments, slug } = element;
+        const {
+          post, comments, slug, image,
+        } = element;
         // early comment cleaning
-        if (post.startsWith('[Serious] ')) {
-          post = post.replace('[Serious] ', '');
-        }
-        for (let i = comments.length - 1; i >= 0; i -= 1) {
-          if (comments[i].includes('reddit')) {
-            comments.splice(i, 1);
-          }
-        }
+        // if (post.startsWith('[Serious] ')) {
+        //   post = post.replace('[Serious] ', '');
+        // }
+        // for (let i = comments.text.length - 1; i >= 0; i -= 1) {
+        //   if (comments[i].text.includes('reddit')) {
+        //     comments.text.splice(i, 1);
+        //   }
+        // }
         // this lowkey wack af i dont really know how else to clean comments
         let finalPost = await Article.findOne({ slug });
         if (!finalPost) {
@@ -93,9 +94,11 @@ const saveArticles = async (docs) => {
             post,
             comments,
             slug,
+            image,
           });
           await finalPost.save(); // adds article to database
           savedCount += 1;
+          console.log('after trying to save', savedCount);
         }
       }),
     );
