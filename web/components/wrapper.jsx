@@ -20,7 +20,14 @@ const Wrapper = (props) => {
     <div>
       <Head>
         <title>
-          {`${Name} - ${title}`}
+          {
+            // Display either "Name" or "Name - Title"
+            `${Name} ${
+              title !== undefined
+                ? `- ${title}`
+                : ''
+            }`
+          }
         </title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -35,11 +42,15 @@ const Wrapper = (props) => {
 };
 
 Wrapper.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
   ]).isRequired,
+};
+
+Wrapper.defaultProps = {
+  title: undefined,
 };
 
 export default Wrapper;

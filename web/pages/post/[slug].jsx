@@ -82,8 +82,9 @@ const Post = (props) => {
           </div>
           {
             comments.map((comment) => (
-              <div key={stringHash(comment)}>
-                <p>{comment}</p>
+              <div key={stringHash(comment.text)}>
+                { comment.image ? <img src={comment.image} alt="" /> : ''}
+                {comment.text}
               </div>
             ))
           }
@@ -98,17 +99,14 @@ const Post = (props) => {
 };
 
 Post.getInitialProps = async ({ res, query }) => {
-  const apiReq = await unfetch(`http://localhost:8080/a/${query.slug}`);
+  // TODO: Once API is moved to nextjs, use /api/ instead
+  const apiReq = await unfetch(`http://localhost:5000/a/${query.slug}`);
   if (apiReq.ok === false) {
     res.statusCode = apiReq.status;
     return { error: { status: apiReq.status, message: apiReq.statusText } };
   }
 
   const postData = await apiReq.json();
-  if (postData.error) {
-    res.statusCode = 404;
-    return { error: { message: postData.message } };
-  }
 
   return ({
     title: postData.post,
@@ -121,7 +119,12 @@ Post.getInitialProps = async ({ res, query }) => {
 Post.propTypes = {
   error: PropTypes.shape({ status: PropTypes.number, message: PropTypes.string.isRequired }),
   title: PropTypes.string,
-  comments: PropTypes.arrayOf(PropTypes.string),
+  comments: PropTypes.arrayOf(
+    PropTypes.shape({
+      text: PropTypes.string.isRequired,
+      image: PropTypes.string,
+    }),
+  ),
   image: PropTypes.string,
   date: PropTypes.string,
 };
