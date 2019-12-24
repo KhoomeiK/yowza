@@ -1,31 +1,11 @@
 const Snoowrap = require('snoowrap');
 const Slug = require('slug');
 const marked = require('marked');
-const { imageFromText } = require('./keywords');
+const { imageFromText, processTitle } = require('./textProcessing');
 const { saveArticles } = require('./database/db');
 const {
   username, password, clientId, clientSecret, userAgent,
 } = require('./database/.env.json');
-
-const processTitle = (rawTitle) => {
-  let finalTitle = rawTitle.trim();
-
-  const regexp = /(.*)( of [Rr]eddit[:,]? ?)/g;
-  const matches = regexp.exec(finalTitle);
-
-  if (matches && matches.length > 0) {
-    finalTitle = finalTitle
-      .replace(regexp, '') // Remove __ of Reddit
-      .split('your')
-      .join(`${matches[1].toLowerCase()}'`) // your -> their
-      .split('you')
-      .join(matches[1].toLowerCase()) // you -> __
-      .split('you')
-      .join('them') // Idk why this is but ok
-      .trim(); // Remove extra spaces from manipulation
-  }
-  return (finalTitle.charAt(0).toUpperCase() + finalTitle.slice(1)).trim();
-};
 
 (async () => {
   const r = new Snoowrap({ // reddit API wrapper
