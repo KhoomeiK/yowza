@@ -32,6 +32,7 @@ export default class JssDocument extends Document {
                 font-family: -apple-system, BlinkMacSystemFont, Avenir Next,
                   Avenir, Helvetica, sans-serif;
                 background-color: #f7f7f7;
+                color: #333;
               }
             `}
           </style>

@@ -4,6 +4,7 @@ import unfetch from 'isomorphic-unfetch';
 import Router from 'next/router';
 
 import Error from '@src/components/error';
+import { getOriginUrl } from '@src/utils/url';
 
 
 const Random = (props) => {
@@ -16,12 +17,14 @@ const Random = (props) => {
   return null;
 };
 
-Random.getInitialProps = async ({ res }) => {
-  const apiReq = await unfetch('http://localhost:5000/random');
+Random.getInitialProps = async ({ res, req }) => {
+  const baseUrl = getOriginUrl(req);
+  const apiReq = await unfetch(`${baseUrl}/api/random`);
   if (apiReq.ok === false) {
-    res.statusCode = apiReq.status;
+    if (res) res.statusCode = apiReq.status;
     return { error: { status: apiReq.status, message: apiReq.statusText } };
   }
+  // console.log(apiReq.body);
   const postData = await apiReq.json();
 
   if (res) {

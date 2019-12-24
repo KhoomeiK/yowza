@@ -99,21 +99,30 @@ const Post = (props) => {
 };
 
 Post.getInitialProps = async ({ res, query }) => {
+  try {
   // TODO: Once API is moved to nextjs, use /api/ instead
-  const apiReq = await unfetch(`http://localhost:5000/a/${query.slug}`);
-  if (apiReq.ok === false) {
-    res.statusCode = apiReq.status;
-    return { error: { status: apiReq.status, message: apiReq.statusText } };
+    const apiReq = await unfetch(`http://localhost:5000/a/${query.slug}`);
+    if (apiReq.ok === false) {
+      res.statusCode = apiReq.status;
+      return { error: { status: apiReq.status, message: apiReq.statusText } };
+    }
+
+    const postData = await apiReq.json();
+
+    return ({
+      title: postData.post,
+      comments: postData.comments,
+      image: postData.images,
+      date: dayjs(postData.date).format('MMM. D, YYYY'),
+    });
+  } catch (err) {
+    if (res) res.statusCode = 500;
+    if (err.code === 'ECONNREFUSED') {
+      return { error: { status: 500, message: 'Failed to connect to server. Please try again later.' } };
+    }
+
+    return { error: { status: 500, message: err.message } };
   }
-
-  const postData = await apiReq.json();
-
-  return ({
-    title: postData.post,
-    comments: postData.comments,
-    image: postData.images,
-    date: dayjs(postData.date).format('MMM. D, YYYY'),
-  });
 };
 
 Post.propTypes = {
