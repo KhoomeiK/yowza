@@ -26,7 +26,6 @@ const imageFromText = async (text) => {
       keyword: keywords[0],
       limit: 1,
       advanced: { usageRights: 'fc' },
-      puppeteer: { headless: false },
     });
 
     const results = await google.start();

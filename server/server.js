@@ -1,9 +1,11 @@
 const express = require('express');
+const cors = require('cors');
 const { fetchRandom, fetchArticle } = require('./database/db');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 app.use(express.json({ extended: false }));
+app.use(cors());
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));
 
 // UTILS
