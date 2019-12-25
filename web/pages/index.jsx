@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import unfetch from 'isomorphic-unfetch';
 import { createUseStyles } from 'react-jss';
-import axios from 'axios';
 
-import Wrapper from '@src/components/wrapper';
+import Ad from '@src/components/ad';
 import Card from '@src/components/card';
+import Error from '@src/components/error';
+import Wrapper from '@src/components/wrapper';
 import { Styles } from '@src/utils/config';
+import { getOriginUrl } from '@src/utils/url';
 
 const useStyles = createUseStyles({
   container: {
@@ -34,39 +38,66 @@ const useStyles = createUseStyles({
   },
 });
 
-const Home = () => {
+const Home = (props) => {
   const styles = useStyles();
-  const [state, setState] = useState(null);
-  useEffect(() => {
-    async function getToken() {
-      const data = await axios('http://localhost:5000');
-      console.log(data);
-      setState(data.data);
-    }
-    getToken();
-  }, []);
+  const { articles, error } = props;
+
+  if (articles === undefined || error) {
+    return (<Error message={error.message || ''} status={error.status || 500} />);
+  }
 
   return (
     <Wrapper>
       <div className={styles.container}>
         <div className={styles.content}>
-          {state
-            ? state.map((article) => (
-              <Card
-                image={article.image}
-                text={article.post}
-                slug={article.slug}
-                key={article.slug}
-              />
-            ))
-            : <p>Loading Articles</p>}
+          {articles.map((article) => (
+            <Card
+              image={article.image}
+              text={article.post}
+              slug={article.slug}
+              key={article.slug}
+            />
+          ))}
         </div>
         <div className={styles.side}>
-          <p>Ads</p>
+          <Ad />
         </div>
       </div>
     </Wrapper>
   );
+};
+
+Home.getInitialProps = async ({ res, req }) => {
+  try {
+    const apiReq = await unfetch(`${getOriginUrl(req)}/api/home`);
+    if (apiReq.ok === false) {
+      res.statusCode = apiReq.status;
+      return { error: { status: apiReq.status, message: apiReq.statusText } };
+    }
+    const postData = await apiReq.json();
+    return { articles: postData };
+  } catch (err) {
+    if (res) res.statusCode = 500;
+    if (err.code === 'ECONNREFUSED') {
+      return { error: { status: 500, message: 'Failed to connect to server. Please try again later.' } };
+    }
+
+    return { error: { status: 500, message: err.message } };
+  }
+};
+
+Home.propTypes = {
+  error: PropTypes.shape({ status: PropTypes.number, message: PropTypes.string.isRequired }),
+  articles: PropTypes.arrayOf(PropTypes.shape({
+    views: PropTypes.number,
+    post: PropTypes.string,
+    slug: PropTypes.string,
+  })),
+};
+
+Home.defaultProps = {
+  error: undefined,
+  articles: undefined,
 };
 
 export default Home;

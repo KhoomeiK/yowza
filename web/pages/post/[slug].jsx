@@ -9,6 +9,7 @@ import Ad from '@src/components/ad';
 import Wrapper from '@src/components/wrapper';
 import Error from '@src/components/error';
 import dayjs from 'dayjs';
+import { getOriginUrl } from '@src/utils/url';
 
 /*
  TODO: Make Error page actually good
@@ -98,10 +99,9 @@ const Post = (props) => {
   );
 };
 
-Post.getInitialProps = async ({ res, query }) => {
+Post.getInitialProps = async ({ res, query, req }) => {
   try {
-  // TODO: Once API is moved to nextjs, use /api/ instead
-    const apiReq = await unfetch(`http://localhost:5000/a/${query.slug}`);
+    const apiReq = await unfetch(`${getOriginUrl(req)}/api/a/${query.slug}`);
     if (apiReq.ok === false) {
       res.statusCode = apiReq.status;
       return { error: { status: apiReq.status, message: apiReq.statusText } };

@@ -1,8 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Link from 'next/link';
 import { createUseStyles } from 'react-jss';
 
-const styles = createUseStyles({
+const useStyles = createUseStyles({
+  container: {
+    textDecoration: 'inherit',
+    color: 'inherit',
+  },
   card: {
     border: '1px solid black',
     padding: '1rem',
@@ -15,25 +20,24 @@ const styles = createUseStyles({
 });
 
 const Card = (props) => {
+  const styles = useStyles();
   const { image, text, slug } = props;
   return (
-    <div role="button" tabIndex={0} className={styles().card} onKeyDown onClick={() => { window.location = `http://localhost:3000/a/${slug}`; }}>
-      <img src={image} width="70%" alt={image} />
-      <h3>{text}</h3>
-    </div>
+    <Link href={`/post/${slug}`}>
+      <a className={styles.container}>
+        <div className={styles.card}>
+          <img src={image} width="70%" alt={image} />
+          <h3>{text}</h3>
+        </div>
+      </a>
+    </Link>
   );
 };
 
 Card.propTypes = {
-  image: PropTypes.string,
-  text: PropTypes.string,
-  slug: PropTypes.string,
-};
-
-Card.defaultProps = {
-  image: null,
-  text: null,
-  slug: null,
+  image: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
 };
 
 export default Card;

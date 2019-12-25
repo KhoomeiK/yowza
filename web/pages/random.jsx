@@ -24,7 +24,6 @@ Random.getInitialProps = async ({ res, req }) => {
     if (res) res.statusCode = apiReq.status;
     return { error: { status: apiReq.status, message: apiReq.statusText } };
   }
-  // console.log(apiReq.body);
   const postData = await apiReq.json();
 
   if (res) {
