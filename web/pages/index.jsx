@@ -34,25 +34,6 @@ const useStyles = createUseStyles({
   },
 });
 
-// const Home = async () => {
-//   const styles = useStyles();
-//   return (
-// <Wrapper>
-//   <div className={styles.container}>
-//     <div className={styles.content}>
-//       <Card
-//         image="https://upload.wikimedia.org/wikipedia/commons/f/f6/GoodMorningToAll_1893_song.jpg"
-//         text="What is a song which seems to be upbeat and happy until you listen to the lyrics?"
-//       />
-//     </div>
-//     <div className={styles.side}>
-//       <p>Ads</p>
-//     </div>
-//   </div>
-// </Wrapper>
-//   );
-// };
-
 const Home = () => {
   const styles = useStyles();
   const [state, setState] = useState(null);
@@ -64,8 +45,7 @@ const Home = () => {
     }
     getToken();
   }, []);
-  // const data = await axios('http://localhost:5000');
-  // console.log(data);
+
   return (
     <Wrapper>
       <div className={styles.container}>
