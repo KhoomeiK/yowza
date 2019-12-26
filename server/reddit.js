@@ -31,7 +31,7 @@ const {
       image: await imageFromText(doc.post),
       comments: await Promise.all(doc.comments.map(async (comment) => ({
         text: comment,
-        image: comment.length < 40 ? await imageFromText(comment) : undefined,
+        image: comment.length < 40 ? 'await imageFromText(comment)' : undefined,
       }))),
     })));
     console.log(docs);

@@ -96,6 +96,7 @@ const saveArticles = async (docs) => {
             slug,
             image,
           });
+          console.log('post#', savedCount, finalPost);
           await finalPost.save(); // adds article to database
           savedCount += 1;
           console.log('after trying to save', savedCount);

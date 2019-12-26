@@ -14,6 +14,11 @@ const ArticleSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  image: { // image URL
+    type: String,
+    default: '',
+    required: true,
+  },
   date: {
     type: Date,
     default: Date.now,
@@ -22,11 +27,6 @@ const ArticleSchema = new mongoose.Schema({
   views: {
     type: Number,
     default: 0,
-    required: false,
-  },
-  image: { // image URL
-    type: String,
-    default: '',
     required: false,
   },
 });

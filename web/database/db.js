@@ -36,7 +36,7 @@ const fetchRandom = async (num) => {
       .sample(num || 5)
       // Specify which fields to fetch
       .project({
-        images: 1,
+        image: 1,
         post: 1,
         slug: 1,
         views: 1,
@@ -58,7 +58,7 @@ const fetchArticle = async (slug) => {
         // Anything not specified here is auto-excluded
         comments: 1,
         views: 1,
-        images: 1,
+        image: 1,
         post: 1,
         slug: 1,
         date: 1,

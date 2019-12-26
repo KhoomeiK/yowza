@@ -22,6 +22,7 @@ const useStyles = createUseStyles({
 const Card = (props) => {
   const styles = useStyles();
   const { image, text, slug } = props;
+  console.log(props);
   return (
     <Link href={`/post/${slug}`}>
       <a className={styles.container}>
