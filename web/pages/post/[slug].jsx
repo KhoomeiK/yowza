@@ -8,6 +8,7 @@ import { Styles } from '@src/utils/config';
 import Ad from '@src/components/ad';
 import Wrapper from '@src/components/wrapper';
 import Error from '@src/components/error';
+import Card from '@src/components/card';
 import dayjs from 'dayjs';
 import { getOriginUrl } from '@src/utils/url';
 
@@ -73,7 +74,7 @@ const Post = (props) => {
       <div className={styles.container}>
         <div className={styles.content}>
           <div>
-            { image ? <img src={image} alt="" /> : '' }
+            {image ? <img src={image} alt="" width="80%" /> : ''}
             <h1>{title}</h1>
             <span>
               Published on
@@ -83,10 +84,7 @@ const Post = (props) => {
           </div>
           {
             comments.map((comment) => (
-              <div key={stringHash(comment.text)}>
-                { comment.image ? <img src={comment.image} alt="" /> : ''}
-                {comment.text}
-              </div>
+              <Card text={comment.text} image={comment.image} key={stringHash(comment.text)} />
             ))
           }
         </div>
@@ -112,7 +110,7 @@ Post.getInitialProps = async ({ res, query, req }) => {
     return ({
       title: postData.post,
       comments: postData.comments,
-      image: postData.images,
+      image: postData.image,
       date: dayjs(postData.date).format('MMM. D, YYYY'),
     });
   } catch (err) {

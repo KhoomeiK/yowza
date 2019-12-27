@@ -13,32 +13,40 @@ const useStyles = createUseStyles({
     padding: '1rem',
     margin: '1rem',
     textAlign: 'center',
-    '&:hover': {
-      cursor: 'pointer',
-    },
   },
 });
 
 const Card = (props) => {
   const styles = useStyles();
   const { image, text, slug } = props;
-  console.log(props);
-  return (
+
+  const inner = (
+    <div className={styles.card}>
+      {/* TODO: max image card sizing */}
+      {image ? <img src={image} width="70%" alt={image} /> : null}
+      <h3>{text}</h3>
+    </div>
+  );
+  return (slug ? (
     <Link href={`/post/${slug}`}>
       <a className={styles.container}>
-        <div className={styles.card}>
-          <img src={image} width="70%" alt={image} />
-          <h3>{text}</h3>
-        </div>
+        {inner}
       </a>
     </Link>
+  )
+    : inner
   );
 };
 
 Card.propTypes = {
-  image: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
-  slug: PropTypes.string.isRequired,
+  image: PropTypes.string,
+  slug: PropTypes.string,
+};
+
+Card.defaultProps = {
+  image: null,
+  slug: null,
 };
 
 export default Card;
