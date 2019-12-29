@@ -91,7 +91,7 @@ const saveArticles = async (docs) => {
           post = post.replace('[Serious] ', '');
         }
         for (let i = comments.length - 1; i >= 0; i -= 1) {
-          if (comments[i].includes('reddit')) {
+          if (comments[i].toLowerCase().includes('reddit')) {
             comments.splice(i, 1);
           }
           if (comments[i].toLowerCase().includes('edit:')) {
