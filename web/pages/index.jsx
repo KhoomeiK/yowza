@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import unfetch from 'isomorphic-unfetch';
 import { createUseStyles } from 'react-jss';
+// import InfiniteScroll from 'react-infinite-scroller';
 
 import Ad from '@src/components/ad';
 import Card from '@src/components/card';
@@ -41,6 +42,7 @@ const useStyles = createUseStyles({
 const Home = (props) => {
   const styles = useStyles();
   const { articles, error } = props;
+  // console.log(articles);
 
   if (articles === undefined || error) {
     return (<Error message={error.message || ''} status={error.status || 500} />);
@@ -50,6 +52,12 @@ const Home = (props) => {
     <Wrapper>
       <div className={styles.container}>
         <div className={styles.content}>
+          {/* <InfiniteScroll
+            pageStart={0}
+            loadMore={() => Home.getInitialProps()}
+            hasMore
+            loader={<div className="loader" key={0}>Loading ...</div>}
+          > */}
           {articles.map((article) => (
             <Card
               image={article.image}
@@ -58,6 +66,8 @@ const Home = (props) => {
               key={article.slug}
             />
           ))}
+          {/* </InfiniteScroll> */}
+          {/* <button type="button" onClick={() => window.location.reload()}>Load more</button> */}
         </div>
         <div className={styles.side}>
           <Ad />
