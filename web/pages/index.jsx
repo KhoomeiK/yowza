@@ -61,7 +61,7 @@ const Home = (props) => {
           {articles.map((article) => (
             <Card
               image={article.image}
-              text={article.post}
+              title={article.post}
               slug={article.slug}
               key={article.slug}
             />

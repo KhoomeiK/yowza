@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import stringHash from 'string-hash';
 import { createUseStyles } from 'react-jss';
 import unfetch from 'isomorphic-unfetch';
+import { split } from 'sentence-splitter';
 
 import { Styles } from '@src/utils/config';
 import Ad from '@src/components/ad';
@@ -32,6 +33,9 @@ const useStyles = createUseStyles({
   side: {
     // DEBUG background: 'lightblue',
     padding: '1rem',
+  },
+  image: {
+    width: '100%',
   },
   '@media (min-width: 769px)': {
     container: {
@@ -74,7 +78,7 @@ const Post = (props) => {
       <div className={styles.container}>
         <div className={styles.content}>
           <div>
-            {image ? <img src={image} alt="" width="80%" /> : ''}
+            {image ? <img className={styles.image} src={image} alt="" /> : ''}
             <h1>{title}</h1>
             <span>
               Published on
@@ -83,9 +87,18 @@ const Post = (props) => {
             </span>
           </div>
           {
-            comments.map((comment) => (
-              <Card text={comment.text} image={comment.image} key={stringHash(comment.text)} />
-            ))
+            comments.map((comment) => {
+              const firstSentence = split(comment.text)[0].raw;
+              const otherSentences = comment.text.replace(firstSentence, '');
+              return (
+                <Card
+                  title={firstSentence}
+                  description={otherSentences}
+                  image={comment.image}
+                  key={stringHash(firstSentence)}
+                />
+              );
+            })
           }
         </div>
         <div className={styles.side}>

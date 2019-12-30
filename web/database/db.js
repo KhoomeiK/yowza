@@ -94,8 +94,10 @@ const saveArticles = async (docs) => {
           if (comments[i].includes('reddit')) {
             comments.splice(i, 1);
           }
+          if (comments[i].toLowerCase().includes('edit:')) {
+            comments[i] = comments[i].substring(0, comments[i].toLowerCase().indexOf('edit:')).trim();
+          }
         }
-        // this lowkey wack af i dont really know how else to clean comments
         let finalPost = await Article.findOne({ slug });
         if (!finalPost) {
           finalPost = new Article({
