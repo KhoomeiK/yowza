@@ -9,22 +9,43 @@ const useStyles = createUseStyles({
     color: 'inherit',
   },
   card: {
-    border: '1px solid black',
     padding: '1rem',
-    margin: '1rem',
-    textAlign: 'center',
+    margin: '1.5rem 0',
+
+    borderRadius: '0.5rem',
+    background: 'white',
+    boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
+  },
+  image: {
+    width: '100%',
+    maxHeight: '50%',
+    objectFit: 'cover',
+    objectPosition: 'center center',
+  },
+  text: {
+    margin: '0.5rem',
+  },
+  title: {
+    fontWeight: '500',
+    fontSize: '1.15rem',
   },
 });
 
 const Card = (props) => {
   const styles = useStyles();
-  const { image, text, slug } = props;
+  const {
+    image, title, description, slug,
+  } = props;
 
   const inner = (
     <div className={styles.card}>
       {/* TODO: max image card sizing */}
-      {image ? <img src={image} width="70%" alt={image} /> : null}
-      <h3>{text}</h3>
+      {image ? <img className={styles.image} src={image} alt="" /> : undefined}
+      <p className={styles.text}>
+        <span className={styles.title}>{title}</span>
+        {' '}
+        {description}
+      </p>
     </div>
   );
   return (slug ? (
@@ -39,14 +60,27 @@ const Card = (props) => {
 };
 
 Card.propTypes = {
-  text: PropTypes.string.isRequired,
+  title: (props, propName, componentName) => {
+    if (!props.title && !props.description) {
+      return new Error(`One of props 'title' or 'description' was not specified in '${componentName}'.`);
+    }
+    return undefined;
+  },
+  description: (props, propName, componentName) => {
+    if (!props.title && !props.description) {
+      return new Error(`One of props 'title' or 'description' was not specified in '${componentName}'.`);
+    }
+    return undefined;
+  },
   image: PropTypes.string,
   slug: PropTypes.string,
 };
 
 Card.defaultProps = {
-  image: null,
-  slug: null,
+  title: undefined,
+  description: undefined,
+  image: undefined,
+  slug: undefined,
 };
 
 export default Card;
