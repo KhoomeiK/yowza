@@ -48,11 +48,6 @@ const Nav = () => {
           </Link>
         </li>
         <li className={styles.listItem}>
-          <Link href="/trending">
-            <a className={styles.link}>Trending</a>
-          </Link>
-        </li>
-        <li className={styles.listItem}>
           <Link href="/random">
             <a className={styles.link}>Random</a>
           </Link>

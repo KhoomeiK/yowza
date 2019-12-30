@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import stringHash from 'string-hash';
 import { createUseStyles } from 'react-jss';
@@ -87,22 +87,24 @@ const Post = (props) => {
             </span>
           </div>
           {
-            comments.map((comment) => {
+            comments.map((comment, index) => {
               const firstSentence = split(comment.text)[0].raw;
               const otherSentences = comment.text.replace(firstSentence, '');
+              const hashKey = stringHash(firstSentence);
               return (
-                <Card
-                  title={firstSentence}
-                  description={otherSentences}
-                  image={comment.image}
-                  key={stringHash(firstSentence)}
-                />
+                <Fragment key={hashKey}>
+                  <Card
+                    title={firstSentence}
+                    description={otherSentences}
+                    image={comment.image}
+                  />
+                  { index % 3 === 0 ? <Ad /> : undefined }
+                </Fragment>
               );
             })
           }
         </div>
         <div className={styles.side}>
-          <p>SIDE MENU HERE</p>
           <Ad />
         </div>
       </div>

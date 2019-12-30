@@ -41,7 +41,6 @@ const useStyles = createUseStyles({
 const Home = (props) => {
   const styles = useStyles();
   const { articles, error } = props;
-  console.log(articles);
 
   if (articles === undefined || error) {
     return (<Error message={error.message || ''} status={error.status || 500} />);
