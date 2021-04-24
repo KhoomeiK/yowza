@@ -1,3 +1,5 @@
+// TODO: switch to Bing API
+
 const pos = require('parts-of-speech');
 const Scraper = require('images-scraper');
 
@@ -18,7 +20,7 @@ const imageFromText = async (text) => {
 
   // removes stop words
   const keywords = Array.from(new Set(nouns.filter((word) => stops.indexOf(word) === -1)));
-  console.log(keywords);
+  console.log('keywords', keywords);
 
   try {
     // creates scraper that finds rightfully usable images

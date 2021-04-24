@@ -74,33 +74,16 @@ const saveArticles = async (docs) => {
     await connectDB();
     let savedCount = 0; // counts how many docs are saved
     await Promise.all(
-      docs.map(async (element) => {
-        const {
-          post, comments, slug, image,
-        } = element;
-        // early comment cleaning
-        // if (post.startsWith('[Serious] ')) {
-        //   post = post.replace('[Serious] ', '');
-        // }
-        // for (let i = comments.text.length - 1; i >= 0; i -= 1) {
-        //   if (comments[i].text.includes('reddit')) {
-        //     comments.text.splice(i, 1);
-        //   }
-        // }
-        // this lowkey wack af i dont really know how else to clean comments
-        let finalPost = await Article.findOne({ slug });
-        if (!finalPost) {
-          finalPost = new Article({
-            post,
-            comments,
-            slug,
-            image,
-          });
-          console.log('post#', savedCount, finalPost);
-          await finalPost.save(); // adds article to database
-          savedCount += 1;
-          console.log('after trying to save', savedCount);
+      docs.map(async (post) => {
+        const { slug } = post;
+
+        if (await Article.findOne({ slug })) { // if we've already saved this article
+          await Article.deleteOne({ slug }); // overwrite it
         }
+
+        let finalPost = new Article(post);
+        await finalPost.save(); // adds article to database
+        savedCount += 1;
       }),
     );
     console.log('Articles saved:', savedCount);

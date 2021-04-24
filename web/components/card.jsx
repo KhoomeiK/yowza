@@ -27,7 +27,7 @@ const useStyles = createUseStyles({
   },
   title: {
     fontWeight: '500',
-    fontSize: '1.15rem',
+    fontSize: '1.5rem',
   },
 });
 
@@ -40,10 +40,11 @@ const Card = (props) => {
   const inner = (
     <div className={styles.card}>
       {/* TODO: max image card sizing */}
-      {image ? <img className={styles.image} src={image} alt="" /> : undefined}
+      {image ? <img className={styles.image} src={image} alt="" /> : null}
       <p className={styles.text}>
         <span className={styles.title}>{title}</span>
         {' '}
+        {description ? <div><br /></div> : null}
         {description}
       </p>
     </div>

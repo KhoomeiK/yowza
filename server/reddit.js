@@ -1,40 +1,32 @@
 const Snoowrap = require('snoowrap');
 const Slug = require('slug');
-// const marked = require('marked');
-const { imageFromText, processTitle } = require('./textProcessing');
+// const { imageFromText, processTitle } = require('./textProcessing');
 const { saveArticles } = require('./database/db');
 const {
   username, password, clientId, clientSecret, userAgent,
 } = require('./database/.env.json');
 
 (async () => {
-  const r = new Snoowrap({ // reddit API wrapper
-    username, password, clientId, clientSecret, userAgent,
-  });
+  const r = new Snoowrap({username, password, clientId, clientSecret, userAgent,});
 
   try {
-    const top = await r.getSubreddit('AskReddit').getTop(); // fetch top AskReddit posts for today
+    const top = await r.getSubreddit('AskReddit').getTop({time: 'week'}); // fetch top AskReddit posts for today
     let docs = await Promise.all(top.filter((p) => p.score > 3000).map(async (p) => {
       const post = await p.expandReplies({ depth: 1, limit: 3 }); // load comments
-      const comments = post.comments.filter((c) => c.score > p.score / 4).map((c) => c.body);
-      let { title } = post;
-      title = processTitle(title); // title cleaning
+      let comments = Array.from(post.comments).sort((a, b) => b.score - a.score).slice(0, 10).map(c => c.body);
+
       return { // Article object
-        post: title,
-        comments: Array.from(comments),
-        slug: Slug(title).toLowerCase(),
+        post: post.title,
+        comments: comments.map((comment) => ({
+          text: comment,
+          // image: comment.length < 40 ? await imageFromText(comment) : undefined,
+        })),
+        slug: post.id,
+        image: '/NULL/', // await imageFromText(doc.post),
       };
-    })); // builds array of Article objects
-    docs = docs.filter((doc) => !(/[Rr]eddit/g.exec(doc.post))); // final filtering
-    docs = await Promise.all(docs.map(async (doc) => ({
-      ...doc,
-      image: await imageFromText(doc.post),
-      comments: await Promise.all(doc.comments.map(async (comment) => ({
-        text: comment,
-        // image: comment.length < 40 ? await imageFromText(comment) : undefined,
-      }))),
-    })));
-    console.log(docs);
+    }));
+
+    // console.log(docs);
     await saveArticles(docs); // uploads to Mongo
   } catch (err) {
     console.log('Could not fetch from Reddit', err);
