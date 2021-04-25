@@ -24,6 +24,8 @@
       "components": [ "Link" ],
       "specialLink": [ "hrefLeft", "hrefRight" ],
       "aspects": [ "invalidHref", "preferButton" ]
-    }]
+    }],
+    "no-use-before-define": "off",
+    "react/destructuring-assignment": "off"
   }
 }

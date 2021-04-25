@@ -6,7 +6,7 @@ Automatic generation of listicles from AskReddit threads
 - [Website](./web)
 
 # TODO
-- Infinite scroll
+- fix loadArticles key error when navigate away and return
 - Styling
 
 - Hosting

@@ -28,10 +28,12 @@ const connectDB = async () => {
   }
 };
 
-const fetchRandom = async (num) => {
+const fetchRandom = async (num, loadedArticles) => {
   try {
     const Article = await connectDB();
     const articles = Article.aggregate()
+      // Exclude articles that have already been loaded
+      .match({ slug: { $nin: loadedArticles || [] } })
       // Specify who many articles to fetch
       .sample(num || 5)
       // Specify which fields to fetch
