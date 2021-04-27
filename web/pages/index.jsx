@@ -79,7 +79,7 @@ const Home = (props) => {
 
 Home.getInitialProps = async ({ res, req }) => {
   try {
-    const options = req.loadedArticles ? {
+    const options = req && req.loadedArticles ? {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ loadedArticles: req.loadedArticles }),

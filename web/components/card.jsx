@@ -40,11 +40,11 @@ const Card = (props) => {
   const inner = (
     <div className={styles.card}>
       {/* TODO: max image card sizing */}
-      {image ? <img className={styles.image} src={image} alt="" /> : null}
+      {image && image !== '/NULL/' ? <img className={styles.image} src={image} alt="" /> : null}
       <p className={styles.text}>
         <span className={styles.title}>{title}</span>
         {' '}
-        {description ? <div><br /></div> : null}
+        {description ? <br /> : null}
         {description}
       </p>
     </div>

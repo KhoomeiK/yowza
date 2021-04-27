@@ -78,7 +78,7 @@ const Post = (props) => {
       <div className={styles.container}>
         <div className={styles.content}>
           <div>
-            {image ? <img className={styles.image} src={image} alt="" /> : ''}
+            {image && image !== '/NULL/' ? <img className={styles.image} src={image} alt="" /> : ''}
             <h1>{title}</h1>
             <span>
               Published on
