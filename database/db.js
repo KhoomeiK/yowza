@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const ArticleSchema = require('./Article');
 
-const { mongoURI } = require('./.env.json'); // gets the mongodb string
+const { mongoURI } = require('.env.json'); // gets the mongodb string
 
 /**
  * Connect to Database
