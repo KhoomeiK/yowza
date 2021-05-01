@@ -1,18 +1,5 @@
-# Yowza
+# Yowza Web
 
-Automatic generation of listicles from AskReddit threads
+[< Go Back To Root](https://github.com/KhoomeiK/yowza)
 
-- [Server & DB](./server)
-- [Website](./web)
-
-# TODO
-- fetch images
-- Styling
-  - convert markdown to html (library?)
-
-- Hosting
-- Domain
-- Ads
-- Social Media
-
-- Reddit.js working with Bing Image Search API & CRONscript
+Codebase for SSR website
