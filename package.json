@@ -5,7 +5,7 @@
   "scripts": {
     "start": "next dev",
     "build": "next build",
-    "prod": "next start",
+    "prod": "next start -p $PORT",
     "lint": "eslint . --ext .js,.jsx",
     "lint:fix": "eslint --fix . --ext .js,.jsx"
   },
