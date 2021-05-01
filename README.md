@@ -6,8 +6,9 @@ Automatic generation of listicles from AskReddit threads
 - [Website](./web)
 
 # TODO
-- fix loadArticles key error when navigate away and return
+- fetch images
 - Styling
+  - convert markdown to html (library?)
 
 - Hosting
 - Domain

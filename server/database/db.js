@@ -81,7 +81,7 @@ const saveArticles = async (docs) => {
           await Article.deleteOne({ slug }); // overwrite it
         }
 
-        let finalPost = new Article(post);
+        const finalPost = new Article(post);
         await finalPost.save(); // adds article to database
         savedCount += 1;
       }),
