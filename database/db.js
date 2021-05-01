@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const ArticleSchema = require('./Article');
 
-const { mongoURI } = require('.env.json'); // gets the mongodb string
+require('dotenv').config()
 
 /**
  * Connect to Database
@@ -13,7 +13,8 @@ const connectDB = async () => {
       return mongoose.model('post');
     }
     const article = mongoose.model('post', ArticleSchema);
-    await mongoose.connect(mongoURI, {
+    console.log(process.env.MONGO_URI)
+    await mongoose.connect(process.env.MONGO_URI, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
       useCreateIndex: true,
