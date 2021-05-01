@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "next dev",
+    "start": "next start -p $PORT",
     "build": "next build",
-    "prod": "next start -p $PORT",
+    "dev": "next dev",
     "lint": "eslint . --ext .js,.jsx",
     "lint:fix": "eslint --fix . --ext .js,.jsx"
   },
