@@ -12,7 +12,7 @@ const {
   });
 
   try {
-    const top = await r.getSubreddit('AskReddit').getTop({ time: 'day' }); // fetch top AskReddit posts for today
+    const top = await r.getSubreddit('AskReddit').getTop({ time: 'week' }); // fetch top AskReddit posts for today
     const docs = await Promise.all(top.filter((p) => p.score > 3000).map(async (p) => {
       const post = await p.expandReplies({ depth: 1, limit: 3 }); // load comments
       const comments = Array.from(post.comments).filter((c) => !c.body.includes('[deleted]')).sort((a, b) => b.score - a.score).slice(0, 10)
