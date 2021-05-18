@@ -31,8 +31,8 @@ const {
       };
     }));
 
-    // console.log(docs);
-    // await saveArticles(docs); // uploads to Mongo
+    console.log(docs);
+    await saveArticles(docs); // uploads to Mongo
   } catch (err) {
     console.log('Could not fetch from Reddit', err);
   }

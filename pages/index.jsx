@@ -60,7 +60,7 @@ const Home = (props) => {
           >
             {articles.map((article) => (
               <Card
-                // image={article.image}
+                image={article.image}
                 title={article.post}
                 slug={article.slug}
                 key={article.slug}
